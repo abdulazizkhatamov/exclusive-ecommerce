@@ -1,0 +1,200 @@
+{
+  "home": "Home",
+  "contact": "Contact",
+  "about": "About us",
+  "sign_in": "Sign in",
+  "sign_up": "Sign up",
+  "search_bar": "What are you looking for?",
+  "page_home": {
+    "sections": {
+      "flash_sales": {
+        "red_title": "Today's",
+        "title": "Flash Sales",
+        "no_products": "No products found.",
+        "view_all": "View All Products"
+      },
+      "categories": {
+        "red_title": "Categories",
+        "title": "Browse By Category",
+        "no_categories": "No categories found."
+      },
+      "best_selling": {
+        "red_title": "This Month",
+        "title": "Best Selling Products",
+        "view_all": "View All",
+        "no_products": "No products found."
+      },
+      "showcase": {
+        "categories": "Categories",
+        "title": {
+          "1": "Enhance Your",
+          "2": "Music Experience"
+        },
+        "time": {
+          "hours": "Hours",
+          "days": "Days",
+          "minutes": "Minutes",
+          "seconds": "Seconds"
+        },
+        "buy_button": "Buy Now!"
+      },
+      "products": {
+        "red_title": "Our Products",
+        "title": "Explore Our Products",
+        "no_products": "No products found.",
+        "view_all": "View All Products"
+      },
+      "featured": {
+        "red_title": "Featured",
+        "title": "New Arrival",
+        "items": {
+          "ps5": {
+            "title": "PlayStation 5",
+            "paragraph": "Black and White version of the PS5 coming out on sale."
+          },
+          "woman": {
+            "title": "Woman's Collection",
+            "paragraph": " Featured woman collections that give you another vibe."
+          },
+          "speakers": {
+            "title": "Speakers",
+            "paragraph": "Amazon wireless speakers"
+          },
+          "perfume": {
+            "title": "Perfume",
+            "paragraph": "GUCCI INTENSE OUD EDP"
+          }
+        },
+        "shop_now_button": "Show Now"
+      }
+    }
+  },
+  "page_auth": {
+    "register": {
+      "title": "Create an account",
+      "paragraph": "Enter your details below",
+      "inputs": {
+        "full_name": {
+          "label": "Full name",
+          "placeholder": "First and last name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "m@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Password"
+        }
+      },
+      "submit_button": "Sign up",
+      "submitting_button": "Loading...",
+      "is_exist_account": {
+        "question": "Already have an account?",
+        "link": "Sign in"
+      },
+      "backend_responses": {
+        "success": "Your account has been successfully created."
+      }
+    },
+    "login": {"title": "Log in to Exclusive",
+      "paragraph": "Enter your details below",
+      "inputs": {
+        "email": {
+          "label": "Email",
+          "placeholder": "m@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Password"
+        }
+      },
+      "forgot_password": "Forgot password?",
+      "submit_button": "Sign in",
+      "submitting_button": "Loading..."
+    }
+  },
+  "page_about": {
+    "title": "Our Story",
+    "primary_paragraph": "Launched in 2015, Exclusive is South Asia's premier online shopping marketplace with an active presence in Bangladesh. Supported by wide range of tailored marketing, data and service solutions, Exclusive has 10,500 sellers and 300 brands and serves 3 millions customers across the region.",
+    "secondary_paragraph": "Exclusive has more than 1 Million products to offer, growing at a very fast. Exclusive offers a diverse assortment in categories ranging from consumer.",
+    "stats": {
+      "active_sellers": "Sellers active our site",
+      "monthly_sales": "Monthly Product Sale",
+      "active_customers": "Customer active in our site",
+      "annual_gross": "Annual gross sale in our site"
+    },
+    "features": {
+      "free_and_fast": {
+        "title": "FREE AND FAST DELIVERY",
+        "paragraph": "Free delivery for all orders over $140"
+      },
+      "customer_service": {
+        "title": "24/7 CUSTOMER SERVICE",
+        "paragraph": "Friendly 24/7 customer support"
+      },
+      "refund_guarantee": {
+        "title": "MONEY BACK GUARANTEE",
+        "paragraph": "We return money within 30 days"
+      }
+    }
+  },
+  "page_contact": {
+    "call_us": {
+      "title": "Call To Us",
+      "paragraph": "We are available 24/7, 7 days a week.",
+      "1": "Phone: +880161111222"
+    },
+    "write_us": {
+      "title": "Write To Us",
+      "paragraph": "Fill out our form and we will contact you within 24 hours.",
+      "1": "Emails: customer@exclusive.com",
+      "2": "Emails: support@exclusive.com"
+    },
+    "form": {
+      "inputs": {
+        "name": {
+          "placeholder": "Your Name *"
+        },
+        "email": {
+          "placeholder": "Your Email *"
+        },
+        "phone": {
+          "placeholder": "Your Phone *"
+        },
+        "message": {
+          "placeholder": "Your Message *"
+        }
+      },
+      "submit_button": "Send Message"
+    }
+  },
+  "errors": {
+    "auth": {
+      "fullName_required": "Full name is required",
+      "email_required": "Email is required",
+      "password_required": "Password is required",
+      "min_6_password": "Password must be at least 6 characters long",
+      "register": {
+        "backend_responses": {
+          "all_fields_required": "All fields are required (fullName, email, password).",
+          "email_exist": "Email is already in use.",
+          "error_checking_email": "Error checking email in the database.",
+          "error_creating_indb": "Error creating user in the database."
+        }
+      },
+      "login": {
+        "backend_responses": {
+          "invalid_credentials": "Incorrect email or password. Please try again."
+        }
+      }
+    },
+    "404": {
+      "error": "404 Error",
+      "title": "404 Not Found",
+      "paragraph": "Your visited page not found. You may go home page.",
+      "back_button": "Back to home page"
+    },
+    "error_occurred": "An error occurred"
+  }
+}

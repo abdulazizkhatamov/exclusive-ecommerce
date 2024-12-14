@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "prettier": "3.4.2"
+  },
+  "name": "eCommerce",
+  "version": "1.0.0",
+  "description": "E-Commerce site for portfolio.",
+  "main": "index.js",
+  "author": "Abdulaziz",
+  "license": "MIT"
+}

@@ -1,0 +1,200 @@
+{
+  "home": "Bosh sahifa",
+  "contact": "Bog'lanish",
+  "about": "Biz haqimizda",
+  "sign_in": "Kirish",
+  "sign_up": "Ro'yxatdan o'tish",
+  "search_bar": "Nimani qidiryapsiz?",
+  "page_home": {
+    "sections": {
+      "flash_sales": {
+        "red_title": "Bugungi",
+        "title": "Flash savdolar",
+        "no_products": "Hech qanday mahsulot topilmadi.",
+        "view_all": "Hammasini ko‘rish"
+      },
+      "categories": {
+        "red_title": "Kategoriyalar",
+        "title": "Turkum boʻyicha koʻrib chiqish",
+        "no_categories": "Hech qanday kategoriyalar topilmadi."
+      },
+      "best_selling": {
+        "red_title": "Shu oy",
+        "title": "Eng ko'p sotiladigan mahsulotlar",
+        "view_all": "Hammasini ko‘rish",
+        "no_products": "Hech qanday mahsulot topilmadi."
+      },
+      "showcase": {
+        "categories": "Kategoriyalar",
+        "title": {
+          "1": "Musiqa tajribangizni",
+          "2": "yaxshilang"
+        },
+        "time": {
+          "hours": "Soatlar",
+          "days": "Kunlar",
+          "minutes": "Daqiqalar",
+          "seconds": "Sekundlar"
+        },
+        "buy_button": "Hozir xarid qilish!"
+      },
+      "products": {
+        "red_title": "Mahsulotlarimiz",
+        "title": "Mahsulotlarimiz bilan tanishing",
+        "no_products": "Hech qanday mahsulot topilmadi.",
+        "view_all": "Barcha mahsulotlarni ko'rish"
+      },
+      "featured": {
+        "red_title": "Tavsiya etilgan",
+        "title": "Yangi kelgan",
+        "items": {
+          "ps5": {
+            "title": "PlayStation 5",
+            "paragraph": "PS5 ning qora va oq versiyasi sotuvga chiqarildi."
+          },
+          "woman": {
+            "title": "Ayollar kolleksiyasi",
+            "paragraph": "Sizga yana bir jo'shqinlik bag'ishlaydigan taniqli ayollar to'plamlari."
+          },
+          "speakers": {
+            "title": "Dinamiklar",
+            "paragraph": "Amazon simsiz dinamiklari"
+          },
+          "perfume": {
+            "title": "Parfyumeriya",
+            "paragraph": "GUCCI INTENSE OUD EDP"
+          }
+        },
+        "shop_now_button": "Hozir xarid qilish"
+      }
+    }
+  },
+  "page_auth": {
+    "register": {
+      "title": "Hisob ochish",
+      "paragraph": "Ma'lumotlaringizni quyida kiriting",
+      "inputs": {
+        "full_name": {
+          "label": "To'liq ism",
+          "placeholder": "Ism va familiya"
+        },
+        "email": {
+          "label": "Elektron pochta",
+          "placeholder": "m@example.com"
+        },
+        "password": {
+          "label": "Parol",
+          "placeholder": "Parol"
+        }
+      },
+      "submit_button": "Ro'yxatdan o'tish",
+      "submitting_button": "Yuklanmoqda...",
+      "is_exist_account": {
+        "question": "Hisobingiz bormi?",
+        "link": "Kirish"
+      },
+      "backend_responses": {
+        "success": "Hisobingiz muvaffaqiyatli yaratildi."
+      }
+    },
+    "login": {"title": "Exclusive-ga kiring",
+      "paragraph": "Ma'lumotlaringizni quyida kiriting",
+      "inputs": {
+        "email": {
+          "label": "Elektron pochta",
+          "placeholder": "m@example.com"
+        },
+        "password": {
+          "label": "Parol",
+          "placeholder": "Parol"
+        }
+      },
+      "forgot_password": "Parolni unutdingizmi?",
+      "submit_button": "Kirish",
+      "submitting_button": "Yuklanmoqda..."
+    }
+  },
+  "page_about": {
+    "title": "Bizning Hikoya",
+    "primary_paragraph": "2015-yilda ishga tushirilgan Exclusive Janubiy Osiyoning Bangladeshda faol ishtirok etgan onlayn-do'konlar bozoridir. Maxsus marketing, ma'lumotlar va xizmat ko'rsatish echimlarining keng doirasi bilan qo'llab-quvvatlanadigan Exclusive 10 500 sotuvchi va 300 brendga ega va mintaqa bo'ylab 3 million mijozlarga xizmat ko'rsatadi.",
+    "secondary_paragraph": "Eksklyuzivda 1 milliondan ortiq mahsulotlar mavjud bo'lib, ular juda tez o'sib bormoqda. Exclusive iste'molchidan tortib toifadagi turli xil assortimentni taklif etadi.",
+    "stats": {
+      "active_sellers": "Faol sotuvchilar",
+      "monthly_sales": "Oylik mahsulot sotuvi",
+      "active_customers": "Faol mijozlar",
+      "annual_gross": "Yillik yalpi savdo"
+    },
+    "features": {
+      "free_and_fast": {
+        "title": "BEPUL VA TEZ YETKAZIB BERISH",
+        "paragraph": "$140 dan ortiq barcha buyurtmalar uchun bepul yetkazib berish"
+      },
+      "customer_service": {
+        "title": "24/7 MIJOZLARGA XIZMAT KO'RSATISH",
+        "paragraph": "Do'stona 24/7 mijozlarni qo'llab-quvvatlash"
+      },
+      "refund_guarantee": {
+        "title": "PUL QAYTARISH KAFOLATI",
+        "paragraph": "Biz pulni 30 kun ichida qaytaramiz"
+      }
+    }
+  },
+  "page_contact": {
+    "call_us": {
+      "title": "Bizga qo'ng'iroq qiling",
+      "paragraph": "Biz haftada 7 kun, 24/7 ishlaymiz.",
+      "1": "Telefon: +880161111222"
+    },
+    "write_us": {
+      "title": "Bizga Yozing",
+      "paragraph": "Formani to'ldiring va biz 24 soat ichida siz bilan bog'lanamiz.",
+      "1": "Elektron pochta: customer@exclusive.com",
+      "2": "Elektron pochta: support@exclusive.com"
+    },
+    "form": {
+      "inputs": {
+        "name": {
+          "placeholder": "Ismingiz *"
+        },
+        "email": {
+          "placeholder": "Elektron pochtangiz *"
+        },
+        "phone": {
+          "placeholder": "Telefoningiz *"
+        },
+        "message": {
+          "placeholder": "Xabaringiz *"
+        }
+      },
+      "submit_button": "Xabar yuborish"
+    }
+  },
+  "errors": {
+    "auth": {
+      "fullName_required": "To'liq ism talab qilinadi",
+      "email_required": "Elektron pochta talab qilinadi",
+      "password_required": "Parol talab qilinadi",
+      "min_6_password": "Parol kamida 6 ta belgidan iborat bo'lishi kerak",
+      "register": {
+        "backend_responses": {
+          "all_fields_required": "Barcha ma'lumotlar talab qilinadi (To'liq ism, elektron pochta, parol).",
+          "email_exist": "Elektron pochta allaqachon ishlatilmoqda.",
+          "error_checking_email": "Ma'lumotlar bazasida elektron pochtani tekshirishda xatolik yuz berdi.",
+          "error_creating_indb": "Maʼlumotlar bazasida foydalanuvchi yaratishda xatolik yuz berdi."
+        }
+      },
+      "login": {
+        "backend_responses": {
+          "invalid_credentials": "Elektron pochta yoki parol xato. Iltimos, qayta urinib koʻring."
+        }
+      }
+    },
+    "404": {
+      "error": "404 Xatolik",
+      "title": "404 Topilmadi",
+      "paragraph": "Siz tashrif buyurgan sahifa topilmadi. Bosh sahifaga o'tishingiz mumkin.",
+      "back_button": "Bosh sahifaga qaytish"
+    },
+    "error_occurred": "Xatolik yuz berdi"
+  }
+}
