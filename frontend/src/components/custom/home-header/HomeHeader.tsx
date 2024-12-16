@@ -1,6 +1,6 @@
 import React from "react";
-import { HomeHeaderNav } from "@/components/custom/homeHeader/HomeHeaderNav.tsx";
-import { HomeHeaderPromo } from "@/components/custom/homeHeader/HomeHeaderPromo.tsx";
+import { HomeHeaderNav } from "@/components/custom/home-header/HomeHeaderNav.tsx";
+import { HomeHeaderPromo } from "@/components/custom/home-header/HomeHeaderPromo.tsx";
 
 interface HomeHeaderProps {}
 

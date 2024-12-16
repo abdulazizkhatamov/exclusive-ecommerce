@@ -111,7 +111,11 @@
       },
       "forgot_password": "Parolni unutdingizmi?",
       "submit_button": "Kirish",
-      "submitting_button": "Yuklanmoqda..."
+      "submitting_button": "Yuklanmoqda...",
+      "isnot_exist_account": {
+        "question": "Hisobingiz yo'qmi?",
+        "link": "Ro'yxatdan o'tish"
+      }
     }
   },
   "page_about": {

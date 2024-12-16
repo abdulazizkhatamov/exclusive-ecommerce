@@ -111,7 +111,11 @@
       },
       "forgot_password": "Forgot password?",
       "submit_button": "Sign in",
-      "submitting_button": "Loading..."
+      "submitting_button": "Loading...",
+      "isnot_exist_account": {
+        "question": "No account yet?",
+        "link": "Sign up"
+      }
     }
   },
   "page_about": {

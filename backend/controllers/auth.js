@@ -68,25 +68,17 @@ exports.postLoginAccount = async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // secure only in production
-      maxAge: 2 * 60 * 1000,
-      path: "/api/auth/refresh-accessToken",
-      // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Set 'None' in production, otherwise 'Lax' in development
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/api/auth/refresh-token",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set 'None' in production, otherwise 'Lax' in development
     });
 
-    // send accesstoken to client
+    const filteredUser = await User.findById(user.id).select("-password");
+
+    // send accessToken to client
     res.status(200).json({
       success: true,
-      user: {
-        _id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role,
-        orderHistory: user.orderHistory,
-        addresses: user.addresses,
-        cart: user.cart,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      },
+      user: filteredUser,
       accessToken,
     });
   } catch (err) {
@@ -120,7 +112,7 @@ exports.getRefreshAccessToken = async (req, res, next) => {
       { id: decoded.id },
       process.env.ACCESS_TOKEN_SECRET_KEY,
       {
-        expiresIn: "30s",
+        expiresIn: "1h",
       },
     );
 
@@ -130,10 +122,10 @@ exports.getRefreshAccessToken = async (req, res, next) => {
   }
 };
 
-exports.getLogoutAccount = async (req, res) => {
+exports.postLogoutAccount = async (req, res) => {
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    // sameSite: "none",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set 'None' in production, otherwise 'Lax' in development
     secure: true,
     path: "/api/auth/refresh-token",
   });

@@ -10,8 +10,8 @@ router.post("/create-account", controller.postCreateAccount);
 router.post("/login-account", controller.postLoginAccount);
 
 // POST - Refresh token.
-router.get("/refresh-accessToken", controller.getRefreshAccessToken);
+router.get("/refresh-token", controller.getRefreshAccessToken);
 
-router.get("/logout-account", controller.getLogoutAccount);
+router.post("/logout-account", controller.postLogoutAccount);
 
 module.exports = router;

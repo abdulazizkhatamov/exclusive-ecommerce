@@ -8,10 +8,11 @@ import SignupPage from "@/elements/pages/AuthPages/SignupPage.tsx";
 import NotFoundPage from "@/elements/pages/RootPages/NotFoundPage.tsx";
 import { useDispatch } from "react-redux";
 import useAuthHttpClient from "@/hooks/use-auth.ts";
-import { setUser } from "@/features/auth/authSlice.ts";
-import { useEffect } from "react";
+import { setUser } from "@/features/auth/auth-slice.ts";
+import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/custom/ProtectedRoute.tsx";
 import AccountPage from "@/elements/pages/RootPages/AccountPage.tsx";
+import { Loader } from "lucide-react";
 
 // Define route configurations
 const router = createBrowserRouter([
@@ -41,17 +42,29 @@ function App() {
   const dispatch = useDispatch();
   const authHttpClient = useAuthHttpClient();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const getUserDetail = () => {
+    setIsLoading(true);
     authHttpClient
       .get("/api/user")
       .then((res) => dispatch(setUser(res.data)))
-      .catch((e) => e);
+      .catch((e) => e)
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     getUserDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className={"w-screen h-screen items-center flex justify-center"}>
+        <Loader className="mr-2 h-4 w-4 animate-spin" />
+      </div>
+    );
+  }
 
   return <RouterProvider router={router} />;
 }

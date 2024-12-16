@@ -1,5 +1,5 @@
 import React from "react";
-import HomeHeader from "@/components/custom/homeHeader/HomeHeader.tsx";
+import HomeHeader from "@/components/custom/home-header/HomeHeader.tsx";
 import FlashSales from "@/components/custom/FlashSales.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import Categories from "@/components/custom/Categories.tsx";

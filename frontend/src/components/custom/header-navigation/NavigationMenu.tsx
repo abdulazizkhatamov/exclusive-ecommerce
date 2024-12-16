@@ -37,14 +37,6 @@ const NavigationMenu: React.FC = () => {
             {t("about")}
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link
-            to="/account"
-            className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-sm font-medium"
-          >
-            Account
-          </Link>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </Menu>
   );
