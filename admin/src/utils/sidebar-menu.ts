@@ -18,7 +18,6 @@ export const sidebarMenu = {
       title: "Dashboard",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
       items: [
         {
           title: "Overview",
@@ -34,22 +33,17 @@ export const sidebarMenu = {
         },
       ],
     },
-
     {
       title: "Categories",
       url: "#",
       icon: SquareStack,
       items: [
         {
-          title: "All Categories",
+          title: "Categories",
           url: "categories",
         },
         {
-          title: "Add Category",
-          url: "categories/add",
-        },
-        {
-          title: "Manage Subcategories",
+          title: "Subcategories",
           url: "categories/subcategories",
         },
       ],
@@ -66,10 +60,6 @@ export const sidebarMenu = {
         {
           title: "Add Product",
           url: "products/add",
-        },
-        {
-          title: "Product Variants",
-          url: "products/variants",
         },
         {
           title: "Inventory Management",

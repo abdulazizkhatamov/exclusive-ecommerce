@@ -1,76 +1,78 @@
-import axios from "axios";
 import { QueryClient } from "react-query";
-
-import { clearAuth } from "@/features/auth/auth-slice.ts";
+import { httpClient } from "@/config/axios-config.ts";
 import store from "@/app/store.ts";
+import { setAccessToken } from "@/features/auth/auth-slice.ts";
+import { postLogoutAccount } from "@/features/auth/reqests.ts";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 export const queryClient = new QueryClient();
 
-export const postCreateAccount = async (data: {
-  fullName: string;
-  email: string;
-  password: string;
-}) => {
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+const refreshAccessToken = async (): Promise<string | null> => {
   try {
-    const response = await axios.post("/api/auth/create-account", data);
+    const response = await httpClient.get<{ accessToken: string }>(
+      "/api/user/auth/refresh-token",
+    );
+    const { accessToken } = response.data;
 
-    return response.data;
-  } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
-      // Check if the error has a response with a category.message
-      if (e.response?.data?.message) {
-        throw new Error(e.response.data.message);
-      }
-      throw new Error("An error occurred while creating the account");
-    }
+    store.dispatch(setAccessToken(accessToken));
 
-    // Handle unexpected errors
-    throw new Error("An unexpected error occurred");
+    return accessToken;
+  } catch {
+    await postLogoutAccount();
+    return null;
   }
 };
 
-export const postLoginAccount = async (data: {
-  email: string;
-  password: string;
-}) => {
-  try {
-    const response = await axios.post("/api/auth/login-account", data);
+export const authHttpClient = axios.create({
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-    return response.data;
-  } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
-      // Check if the error has a response with a category.message
-      if (e.response?.data?.message) {
-        throw new Error(e.response.data.message);
-      }
-      throw new Error("An error occurred while creating the account");
+// Add interceptors
+authHttpClient.interceptors.request.use(
+  async (config) => {
+    let accessToken = store.getState().auth.accessToken;
+
+    if (!accessToken) {
+      accessToken = await refreshAccessToken();
     }
 
-    // Handle unexpected errors
-    throw new Error("An unexpected error occurred");
-  }
-};
-
-export const postLogoutAccount = async () => {
-  try {
-    await axios.post("/api/auth/logout-account", {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    store.dispatch(clearAuth());
-  } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
-      // Check if the error has a response with a category.message
-      if (e.response?.data?.message) {
-        throw new Error(e.response.data.message);
-      }
-      throw new Error("An error occurred while creating the account");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
-    // Handle unexpected errors
-    throw new Error("An unexpected error occurred");
-  }
-};
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+// Response Interceptor
+authHttpClient.interceptors.response.use(
+  (res) => res, // Return response as-is for successful requests
+  async (error) => {
+    const originalRequest = error.config as CustomAxiosRequestConfig;
+
+    if (
+      error.response?.status === 401 && // Unauthorized status
+      error.response.data.error?.name === "TokenExpiredError" && // Specific error name
+      !originalRequest._retry // Avoid infinite retry loops
+    ) {
+      originalRequest._retry = true; // Mark the request as retried
+      const accessToken = await refreshAccessToken();
+
+      if (accessToken) {
+        // Update the Authorization header
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        // Retry the original request with the new access token
+        return authHttpClient.request(originalRequest);
+      }
+    }
+
+    return Promise.reject(error); // Reject all other errors
+  },
+);

@@ -4,7 +4,12 @@
   "about": "About us",
   "sign_in": "Sign in",
   "sign_up": "Sign up",
+  "cart": "Cart",
+  "checkout": "Checkout",
   "search_bar": "What are you looking for?",
+  "account": {
+
+  },
   "page_home": {
     "sections": {
       "flash_sales": {

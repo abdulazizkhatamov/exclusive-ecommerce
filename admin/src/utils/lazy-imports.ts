@@ -12,20 +12,29 @@ export const AnalyticsPage = lazy(
 export const ActivityLogPage = lazy(
   () => import("@/elements/pages/Dashboard/ActivityLogPage.tsx"),
 );
-export const AllCategoriesPage = lazy(
-  () => import("@/elements/pages/Categories/AllCategoriesPage.tsx"),
+export const CategoriesPage = lazy(
+  () => import("@/elements/pages/Categories/CategoriesPage.tsx"),
 );
-export const AddCategoryPage = lazy(
-  () => import("@/elements/pages/Categories/AddCategoryPage.tsx"),
+export const CategoryPage = lazy(
+  () => import("@/elements/pages/Categories/CategoryPage.tsx"),
 );
 export const SubcategoriesPage = lazy(
   () => import("@/elements/pages/Categories/SubcategoriesPage.tsx"),
 );
-export const AllProductsPage = lazy(
-  () => import("@/elements/pages/Products/AllProductsPage.tsx"),
+export const SubcategoryPage = lazy(
+  () => import("@/elements/pages/Categories/SubcategoryPage.tsx"),
 );
-export const ProductVariantPage = lazy(
-  () => import("@/elements/pages/Products/ProductVariantsPage.tsx"),
+export const AllProductsPage = lazy(
+  () => import("@/elements/pages/Products/ProductsPage.tsx"),
+);
+export const ProductPage = lazy(
+  () => import("@/elements/pages/Products/ProductPage.tsx"),
+);
+export const AddProductPage = lazy(
+  () => import("@/elements/pages/Products/AddProductPage.tsx"),
+);
+export const UpdateProductPage = lazy(
+  () => import("@/elements/pages/Products/UpdateProductPage.tsx"),
 );
 export const ProductInventoryPage = lazy(
   () => import("@/elements/pages/Products/ProductInventoryPage.tsx"),

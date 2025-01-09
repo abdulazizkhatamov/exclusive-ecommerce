@@ -10,41 +10,70 @@ import { Button } from "@/components/ui/button.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import CategoryItem from "./CategoryItem";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
+import { getCategories } from "@/api/requests.ts";
 
-const categories = [
-  {
-    name: "Woman's Fashion",
-    href: "#",
-    subcategories: [
-      { name: "Woman's Fashion", href: "#" },
-      { name: "Dresses", href: "#dresses" },
-      { name: "Tops", href: "#tops" },
-      { name: "Shoes", href: "#shoes" },
-      { name: "Accessories", href: "#accessories" },
-    ],
-  },
-  {
-    name: "Men's Fashion",
-    href: "#",
-    subcategories: [
-      { name: "Men's Fashion", href: "#fashion" },
-      { name: "Shirts", href: "#shirts" },
-      { name: "Pants", href: "#pants" },
-      { name: "Shoes", href: "#shoes" },
-      { name: "Accessories", href: "#accessories" },
-    ],
-  },
-  { name: "Electronics", href: "#" },
-  { name: "Home & Lifestyle", href: "#" },
-  { name: "Medicine", href: "#" },
-  { name: "Sports & Outdoor", href: "#" },
-  { name: "Baby's & Toys", href: "#" },
-  { name: "Groceries & Pets", href: "#" },
-  { name: "Health & Beauty", href: "#" },
-];
+interface Category {
+  _id: string;
+  name: string;
+  description?: string;
+  status: boolean;
+  parent?: {
+    _id: string;
+    name: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
+}
+
+interface TransformedCategory {
+  name: string;
+  href: string;
+  subcategories: {
+    name: string;
+    href: string;
+  }[];
+}
 
 const MobileMenu: React.FC = () => {
   const { t } = useTranslation();
+
+  const { data } = useQuery<{ data: Category[] }>({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
+
+  // Transforming the categories data into the desired structure
+  const categories: TransformedCategory[] =
+    data?.data?.reduce<TransformedCategory[]>((acc, category) => {
+      if (!category.parent) {
+        acc.push({
+          name: category.name,
+          href: `/category/${category._id}`,
+          subcategories: [],
+        });
+      } else {
+        const parentCategory = acc.find(
+          (cat) => cat.name === category.parent?.name,
+        );
+        if (parentCategory) {
+          parentCategory.subcategories.push({
+            name: category.name,
+            href: `/category/${category._id}`,
+          });
+        }
+      }
+      return acc;
+    }, []) || [];
+
+  // Sorting categories: first categories with subcategories, then alphabetically
+  const sortedCategories = categories.sort((a, b) => {
+    if (a.subcategories.length > 0 && b.subcategories.length === 0) return -1;
+    if (a.subcategories.length === 0 && b.subcategories.length > 0) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -100,13 +129,13 @@ const MobileMenu: React.FC = () => {
             {t("about")}
           </Link>
           <Separator className="my-4" />
-          {categories.map((category) => (
+          {sortedCategories.map((category) => (
             <CategoryItem key={category.name} category={category} />
           ))}
           <Separator className="my-4" />
           <div className={"flex justify-between px-5"}>
             <Link
-              to="/login"
+              to="/signin"
               className="text-md font-medium hover:text-gray-900/90"
             >
               {t("sign_in")}

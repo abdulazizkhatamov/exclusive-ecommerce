@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getCategories } from "@/api/api-categories";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { Category } from "@/types/category";
+import { ICategory } from "@/types/category";
 import {
   postCreateCategory,
   putUpdateCategory,
@@ -9,7 +9,7 @@ import {
 } from "@/api/api-categories";
 
 export function useCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const queryClient = useQueryClient();
 
   // Fetch categories category
@@ -32,7 +32,7 @@ export function useCategories() {
     onSuccess: (updatedCategory) => {
       setCategories((prev) =>
         prev.map((category) =>
-          category.id === updatedCategory.id ? updatedCategory : category,
+          category._id === updatedCategory.id ? updatedCategory : category,
         ),
       );
       queryClient.invalidateQueries("categories");
@@ -43,7 +43,7 @@ export function useCategories() {
   const deleteCategoryMutation = useMutation(deleteDeleteCategory, {
     onSuccess: (categoryId) => {
       setCategories((prev) =>
-        prev.filter((category) => category.id !== categoryId),
+        prev.filter((category) => category._id !== categoryId),
       );
       queryClient.invalidateQueries("categories");
     },

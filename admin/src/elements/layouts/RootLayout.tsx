@@ -49,7 +49,7 @@ const RootLayout: React.FC = () => {
         { title: breadcrumbDetails.parent, path: "#", isLast: false }, // Parent menu
         { title: breadcrumbDetails.child, path: pathname, isLast: true }, // Child menu
       ]
-    : [{ title: "Home", path: "/", isLast: true }]; // Fallback to Home if no match
+    : [{ title: "", path: "/", isLast: true }]; // Fallback to Home if no match
 
   return accessToken ? (
     <>

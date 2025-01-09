@@ -16,7 +16,8 @@ interface Category {
 const CategoryItem: React.FC<{ category: Category }> = ({ category }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  if (category.subcategories) {
+  // Only render Collapsible if there are subcategories
+  if (category.subcategories && category.subcategories.length > 0) {
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
@@ -44,6 +45,7 @@ const CategoryItem: React.FC<{ category: Category }> = ({ category }) => {
     );
   }
 
+  // If no subcategories, render just a simple Link
   return (
     <Link
       to={category.href}

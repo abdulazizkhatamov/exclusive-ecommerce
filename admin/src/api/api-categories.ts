@@ -13,9 +13,43 @@ const handleError = (e: unknown) => {
 };
 
 // Get all categories
+export const getAllCategories = async () => {
+  try {
+    const response = await authHttpClient.get("/api/admin/all-categories");
+    return response.data;
+  } catch (e) {
+    handleError(e);
+  }
+};
+
+// Get all parent categories
 export const getCategories = async () => {
   try {
     const response = await authHttpClient.get("/api/admin/categories");
+    return response.data;
+  } catch (e) {
+    handleError(e);
+  }
+};
+
+// Get all subcategories
+export const getSubcategories = async () => {
+  try {
+    const response = await authHttpClient.get("/api/admin/subcategories");
+
+    return response.data;
+  } catch (e) {
+    handleError(e);
+  }
+};
+
+// Get subcategories by category ID
+export const getSubcategoriesByParent = async (parent: string) => {
+  try {
+    const response = await authHttpClient.get(
+      `/api/admin/subcategories/${parent}`,
+    );
+
     return response.data;
   } catch (e) {
     handleError(e);
@@ -41,16 +75,13 @@ export const postCreateCategory = async (category: {
 
 // Update a category by ID
 export const putUpdateCategory = async (data: {
-  _id: string;
   name: string;
   description: string;
   status: boolean;
+  parent: string | null;
 }) => {
   try {
-    const response = await authHttpClient.put(
-      `/api/admin/categories/${data._id}`,
-      data,
-    );
+    const response = await authHttpClient.put(`/api/admin/categories`, data);
     return response.data;
   } catch (e) {
     handleError(e);

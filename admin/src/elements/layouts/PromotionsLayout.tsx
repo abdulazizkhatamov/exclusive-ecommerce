@@ -1,9 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-interface PromotionsLayoutProps {}
-
-const PromotionsLayout: React.FC<PromotionsLayoutProps> = ({}) => {
+const PromotionsLayout: React.FC = () => {
   return <Outlet />;
 };
 

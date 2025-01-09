@@ -1,8 +1,8 @@
 import { httpClient } from "@/config/axios-config.ts";
 import axios, { InternalAxiosRequestConfig } from "axios";
-import { postLogoutAccount } from "@/api/api.ts";
 import store from "@/app/store.ts";
 import { setAccessToken } from "@/features/auth/auth-slice.ts";
+import { postLogoutAccount } from "@/features/auth/reqests.ts";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -31,7 +31,7 @@ const useAuthHttpClient = () => {
     isRefreshing = true;
     try {
       const response = await httpClient.get<{ accessToken: string }>(
-        "/api/auth/refresh-token",
+        "/api/user/auth/refresh-token",
       );
       const { accessToken } = response.data;
 

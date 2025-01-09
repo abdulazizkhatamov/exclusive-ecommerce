@@ -21,6 +21,9 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/public/, ""), // Removes "/public" from the path
       },
+      "/uploads": {
+        target: "http://localhost:3000",
+      },
     },
   },
 });

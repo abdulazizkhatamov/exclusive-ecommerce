@@ -17,6 +17,11 @@ const categorySchema = new Schema(
       type: Boolean,
       default: true,
     },
+    parent: {
+      type: Schema.Types.ObjectId,
+      ref: "Category", // Self-reference for hierarchical relationships
+      default: null, // Null means top-level category
+    },
   },
   { timestamps: true },
 );

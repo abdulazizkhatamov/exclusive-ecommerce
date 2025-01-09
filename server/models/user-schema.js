@@ -28,10 +28,10 @@ const UserSchema = new Schema(
       {
         fullName: String,
         street: String,
-        city: String,
+        apartment: String,
         state: String,
+        city: String,
         postalCode: String,
-        country: String,
         phone: String,
       },
     ],
@@ -40,6 +40,11 @@ const UserSchema = new Schema(
         product: {
           type: Schema.Types.ObjectId,
           ref: "Product",
+          required: true,
+        },
+        variant: {
+          type: Schema.Types.ObjectId,
+          ref: "Variant",
           required: true,
         },
         quantity: {

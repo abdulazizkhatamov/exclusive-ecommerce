@@ -100,7 +100,7 @@ exports.postLoginAccount = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-      message: "Failed to login to account.",
+      message: "Failed to signin to account.",
       error: err.message,
     });
   }

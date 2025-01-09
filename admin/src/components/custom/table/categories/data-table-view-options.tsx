@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useDispatch } from "react-redux";
-import { toggleCreateCategorySheet } from "@/features/ui/ui-slice.ts";
+import { toggleCreateCategorySheet } from "@/features/ui/ui-category-slice.ts";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;

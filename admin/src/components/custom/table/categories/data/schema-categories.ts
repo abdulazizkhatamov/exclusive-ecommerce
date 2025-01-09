@@ -1,15 +1,16 @@
 import { z } from "zod";
 
-// We're keeping a simple non-relational schema here.
-// IRL, you will have a schema for your data models.
+// Updated Zod schema to match Mongoose Category model
 export const categorySchema = z.object({
-  _id: z.string(),
+  _id: z.string(), // Mongoose ObjectId as a string
   name: z.string(),
-  description: z.string(),
+  description: z.string().optional(), // Description is optional
   status: z.boolean(),
-  subcategoryCount: z.number(),
-  productCount: z.number(),
-  createdAt: z.string(),
+  parent: z.string().nullable().optional(), // Parent is either a string (ObjectId) or null
+  subcategories: z.number().optional(), // Number of subcategories (name)
+  products: z.number(), // Number of associated products (can be a number)
+  createdAt: z.string(), // Date in string format (ISO)
+  updatedAt: z.string(), // Date in string format (ISO)
 });
 
 export type Category = z.infer<typeof categorySchema>;

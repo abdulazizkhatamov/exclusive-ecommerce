@@ -1,5 +1,4 @@
 import { ChevronRight, type LucideIcon } from "lucide-react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -15,7 +14,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function NavMain({
   items,
@@ -31,11 +30,26 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const location = useLocation();
+
+  // Update `isActive` based on the current path
+  const updatedItems = items.map((item) => {
+    const isActive =
+      item.url === location.pathname ||
+      (item.items?.some((subItem) => location.pathname.includes(subItem.url)) ??
+        false);
+
+    return {
+      ...item,
+      isActive,
+    };
+  });
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {updatedItems.map((item) => (
           <Collapsible
             key={item.title}
             asChild

@@ -10,14 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-  ShoppingCart,
-  LogOut,
-  User,
-  ShoppingBag,
-  CircleX,
-  Star,
-} from "lucide-react";
+import { ShoppingCart, LogOut, User, ShoppingBag } from "lucide-react";
 import AnnouncementBanner from "@/components/custom/header-navigation/AnnouncementBanner.tsx";
 import MobileMenu from "@/components/custom/header-navigation/MobileMenu.tsx";
 import NavigationMenu from "@/components/custom/header-navigation/NavigationMenu.tsx";
@@ -26,7 +19,7 @@ import LanguageSelector from "@/components/custom/header-navigation/LanguageSele
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store.ts";
 import { useMutation } from "react-query";
-import { postLogoutAccount } from "@/api/api.ts";
+import { postLogoutAccount } from "@/features/auth/reqests.ts";
 
 const HeaderNavigation: React.FC = () => {
   const navigate = useNavigate();
@@ -55,14 +48,21 @@ const HeaderNavigation: React.FC = () => {
         <div className="ml-auto flex items-center space-x-4">
           <SearchBar />
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-gray-700"
-            aria-label="Shopping Cart"
-          >
-            <ShoppingCart className="h-5 w-5" />
-          </Button>
+          <Link to="/cart">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-gray-700 relative"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {user?.cart && user?.cart.length > 0 && (
+                <div className="absolute -top-1 -right-1 bg-red-600 text-xs px-1.5 rounded-full text-white shadow-lg transform translate-x-1/2 translate-y-1/2 transition-all duration-200">
+                  {user.cart.length}
+                </div>
+              )}
+            </Button>
+          </Link>
 
           {user ? (
             <DropdownMenu>
@@ -75,22 +75,18 @@ const HeaderNavigation: React.FC = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 bg-black/50 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
-                <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
-                  <User className="h-5 w-5 text-white" />
-                  <span className="text-white">Manage My Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
-                  <ShoppingBag className="h-5 w-5 text-white" />
-                  <span className="text-white">My Order</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
-                  <CircleX className="h-5 w-5 text-white" />
-                  <span className="text-white">My Cancellations</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
-                  <Star className="h-5 w-5 text-white" />
-                  <span className="text-white">My Reviews</span>
-                </DropdownMenuItem>
+                <Link to={"/account"}>
+                  <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
+                    <User className="h-5 w-5 text-white" />
+                    <span className="text-white">Manage My Account</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link to={"/account/orders"}>
+                  <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
+                    <ShoppingBag className="h-5 w-5 text-white" />
+                    <span className="text-white">My Orders</span>
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem
                   onClick={logoutHandler}
                   className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer"
@@ -101,7 +97,7 @@ const HeaderNavigation: React.FC = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link to={"/login"}>
+            <Link to={"/signin"}>
               <Button
                 variant="outline"
                 className=" border-white/20 hover:bg-white/20"

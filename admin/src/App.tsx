@@ -1,89 +1,10 @@
 import { useEffect, useState, Suspense } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "@/features/auth/auth-slice.ts";
 import useAuthHttpClient from "@/hooks/use-auth.ts";
 import { Loader } from "lucide-react";
-
-import RootLayout from "@/elements/layouts/RootLayout.tsx";
-import CategoriesLayout from "@/elements/layouts/CategoriesLayout.tsx";
-import ProductsLayout from "@/elements/layouts/ProductsLayout.tsx";
-import OrdersLayout from "@/elements/layouts/OrdersLayout.tsx";
-import PromotionsLayout from "@/elements/layouts/PromotionsLayout.tsx";
-import MailsLayout from "@/elements/layouts/MailsLayout.tsx";
-import SettingsLayout from "@/elements/layouts/SettingsLayout.tsx";
-
-// Lazy-loaded page imports
-import * as Pages from "@/utils/lazy-imports.ts";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    children: [
-      { index: true, element: <Pages.OverviewPage /> },
-      { path: "analytics", element: <Pages.AnalyticsPage /> },
-      { path: "activity-log", element: <Pages.ActivityLogPage /> },
-      {
-        path: "categories",
-        element: <CategoriesLayout />,
-        children: [
-          { index: true, element: <Pages.AllCategoriesPage /> },
-          { path: "add", element: <Pages.AddCategoryPage /> },
-          { path: "subcategories", element: <Pages.SubcategoriesPage /> },
-        ],
-      },
-      {
-        path: "products",
-        element: <ProductsLayout />,
-        children: [
-          { index: true, element: <Pages.AllProductsPage /> },
-          { path: "add", element: <Pages.AddCategoryPage /> },
-          { path: "variants", element: <Pages.ProductVariantPage /> },
-          { path: "inventory", element: <Pages.ProductInventoryPage /> },
-        ],
-      },
-      {
-        path: "orders",
-        element: <OrdersLayout />,
-        children: [
-          { index: true, element: <Pages.AllOrdersPage /> },
-          { path: "pending", element: <Pages.PendingOrdersPage /> },
-          { path: "completed", element: <Pages.CompletedOrdersPage /> },
-          { path: "refunds", element: <Pages.RefundRequestsPage /> },
-        ],
-      },
-      {
-        path: "promotions",
-        element: <PromotionsLayout />,
-        children: [
-          { index: true, element: <Pages.AllPromotionsPage /> },
-          { path: "create", element: <Pages.CreatePromotionPage /> },
-          { path: "discount-codes", element: <Pages.DiscountCodesPage /> },
-        ],
-      },
-      {
-        path: "mails",
-        element: <MailsLayout />,
-        children: [
-          { index: true, element: <Pages.AllMailsPage /> },
-          { path: "compose", element: <Pages.ComposeMailsPage /> },
-          { path: "templates", element: <Pages.MailsTemplatesPage /> },
-        ],
-      },
-      {
-        path: "settings",
-        element: <SettingsLayout />,
-        children: [
-          { index: true, element: <Pages.GeneralSettingsPage /> },
-          { path: "payment", element: <Pages.PaymentSettingsPage /> },
-          { path: "shipping", element: <Pages.ShippingSettingsPage /> },
-        ],
-      },
-    ],
-  },
-  { path: "/auth", element: <Pages.AuthPage /> },
-]);
+import { router } from "@/router";
 
 function App() {
   const dispatch = useDispatch();

@@ -4,6 +4,7 @@ import { Category } from "@/components/custom/table/categories/data/schema-categ
 import { DataTableColumnHeader } from "@/components/custom/table/categories/data-table-column-header.tsx";
 import { statuses } from "@/components/custom/table/categories/data/data-categories.tsx";
 import { DataTableRowActions } from "@/components/custom/table/categories/data-table-row-actions.tsx";
+import { Link } from "react-router-dom";
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -30,9 +31,14 @@ export const columns: ColumnDef<Category>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("name")}
-          </span>
+          <Link
+            className={"hover:underline"}
+            to={`/categories/category/${row.getValue("_id")}`}
+          >
+            <span className="max-w-[500px] truncate font-medium">
+              {row.getValue("name")}
+            </span>
+          </Link>
         </div>
       );
     },
@@ -50,8 +56,38 @@ export const columns: ColumnDef<Category>[] = [
             {(() => {
               const value = row.getValue("description") as string; // Get the value
               const description = value.slice(0, 17);
-              return `${description}...`; // Concatenate with dots
+              return value.length < 17 ? value : `${description}...`; // Concatenate with dots
             })()}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "subcategories",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Subcategories" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[100px] truncate font-medium">
+            {row.getValue("subcategories")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "products",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Products" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[100px] truncate font-medium">
+            {row.getValue("products")}
           </span>
         </div>
       );

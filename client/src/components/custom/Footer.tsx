@@ -7,9 +7,7 @@ import imageFooterQr from "@/assets/footer_qr.png";
 import imageAppStore from "@/assets/app_store.png";
 import imageGooglePlay from "@/assets/google_play.png";
 
-interface FooterProps {}
-
-const Footer: React.FC<FooterProps> = ({}) => {
+const Footer: React.FC = () => {
   return (
     <footer className="mt-10 font-inter bg-black text-white pt-12 pb-6">
       <div className="container px-4 mx-auto">
@@ -64,7 +62,10 @@ const Footer: React.FC<FooterProps> = ({}) => {
               >
                 My Account
               </Link>
-              <Link to="/login" className="block hover:text-gray-300 max-w-max">
+              <Link
+                to="/signin"
+                className="block hover:text-gray-300 max-w-max"
+              >
                 Login / Register
               </Link>
               <Link to="/cart" className="block hover:text-gray-300 max-w-max">

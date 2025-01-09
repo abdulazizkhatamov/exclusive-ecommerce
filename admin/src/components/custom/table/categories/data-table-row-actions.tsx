@@ -1,19 +1,14 @@
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 import { categorySchema } from "@/components/custom/table/categories/data/schema-categories.ts";
 
-import { toggleUpdateCategorySheet } from "@/features/ui/ui-slice.ts";
+import {
+  toggleDeleteCategoryDialog,
+  toggleUpdateCategorySheet,
+} from "@/features/ui/ui-category-slice.ts";
 import { useDispatch } from "react-redux";
 
 interface DataTableRowActionsProps<TData> {
@@ -28,26 +23,26 @@ export function DataTableRowActions<TData>({
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-          <MoreHorizontal />
-          <span className="sr-only">Open menu</span>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem
-            onClick={() => dispatch(toggleUpdateCategorySheet())}
-          >
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
-          <DropdownMenuItem>Favorite</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className={"flex gap-2"}>
+        <Button
+          className={"h-7 w-7 "}
+          variant={"outline"}
+          onClick={() => {
+            dispatch(toggleUpdateCategorySheet({ category: category }));
+          }}
+        >
+          <Edit />
+        </Button>
+        <Button
+          className={"h-7 w-7"}
+          variant={"destructive"}
+          onClick={() => {
+            dispatch(toggleDeleteCategoryDialog({ category: category }));
+          }}
+        >
+          <Trash />
+        </Button>
+      </div>
     </>
   );
 }

@@ -1,55 +1,64 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const productSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
+// Schema for product attributes
+const attributeSchema = new Schema(
+  {
+    name: { type: String, required: true }, // Attribute name, e.g., 'Color', 'Size'
+    value: { type: [String], required: true }, // Possible values, e.g., ['Red', 'Blue']
   },
-  description: {
-    type: String,
-    trim: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-  images: [
-    {
-      type: String, // URLs or paths to images
+  { _id: false }, // Disable _id for embedded documents
+);
+
+// Product schema
+const productSchema = new Schema(
+  {
+    name: { type: String, required: true }, // Product name
+    description: { type: String, required: true }, // Product description
+    price: { type: Number, required: true }, // Current price
+    rating: { type: Number, default: 0 }, // Average rating, default 0
+    reviews: { type: Number, default: 0 }, // Number of reviews, default 0
+    discount: { type: Number, default: 0 }, // Discount percentage, default 0
+    attributes: { type: [attributeSchema], required: true }, // Attributes schema
+    quantity: { type: Number, default: 0 }, // Available quantity
+    images: [
+      {
+        type: String, // Product images
+      },
+    ],
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true, // Reference to the category
     },
-  ],
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "Category",
-    required: false, // Product can either have a category or subcategory
+    variants: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Variant", // Reference to the Variant model
+      },
+    ],
   },
-  subcategory: {
-    type: Schema.Types.ObjectId,
-    ref: "Subcategory",
-    required: false, // Product can either have a category or subcategory
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
+  { timestamps: true }, // Add createdAt and updatedAt timestamps
+);
+
+// Middleware to remove deleted product from users' carts
+productSchema.pre("findOneAndDelete", async function (next) {
+  try {
+    const productId = this.getQuery()._id; // Get the ID of the product being deleted
+
+    if (productId) {
+      // Remove this product from all users' carts
+      await mongoose
+        .model("User")
+        .updateMany(
+          { "cart.product": productId },
+          { $pull: { cart: { product: productId } } },
+        );
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
-// Pre-save hook to update the `updatedAt` field
-productSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
-
-const Product = mongoose.model("Product", productSchema);
-
-module.exports = Product;
+module.exports = mongoose.model("Product", productSchema);

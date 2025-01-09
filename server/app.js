@@ -9,9 +9,12 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+
 const mongoose = require("mongoose");
 
-const authRouter = require("./routes/auth");
+const apiRouter = require("./routes/api");
+
+const authRouter = require("./routes/user-auth");
 const userRouter = require("./routes/user");
 
 const adminAuthRouter = require("./routes/admin-auth");
@@ -19,10 +22,13 @@ const adminRouter = require("./routes/admin");
 
 const app = express();
 
+app.use("/api", require("./routes/webhooks"));
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.use(cookieParser());
 app.use(
   cors({
@@ -32,7 +38,8 @@ app.use(
   }),
 );
 
-app.use("/api/auth", authRouter);
+app.use("/api", apiRouter);
+app.use("/api/user/auth", authRouter);
 app.use("/api/user", userRouter);
 
 app.use("/api/admin/auth", adminAuthRouter);

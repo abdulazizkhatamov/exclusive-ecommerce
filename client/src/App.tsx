@@ -1,42 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "@/elements/layouts/RootLayout.tsx";
-import HomePage from "@/elements/pages/RootPages/HomePage.tsx";
-import ContactPage from "@/elements/pages/RootPages/ContactPage.tsx";
-import AboutPage from "@/elements/pages/RootPages/AboutPage.tsx";
-import SigninPage from "@/elements/pages/AuthPages/SigninPage.tsx";
-import SignupPage from "@/elements/pages/AuthPages/SignupPage.tsx";
-import NotFoundPage from "@/elements/pages/RootPages/NotFoundPage.tsx";
+import { RouterProvider } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import useAuthHttpClient from "@/hooks/use-auth.ts";
 import { setUser } from "@/features/auth/auth-slice.ts";
 import { useEffect, useState } from "react";
-import ProtectedRoute from "@/components/custom/ProtectedRoute.tsx";
-import AccountPage from "@/elements/pages/RootPages/AccountPage.tsx";
-import { Loader } from "lucide-react";
 
-// Define route configurations
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "contact", element: <ContactPage /> },
-      { path: "about", element: <AboutPage /> },
-      { path: "404", element: <NotFoundPage /> },
-      {
-        path: "account",
-        element: (
-          <ProtectedRoute>
-            <AccountPage />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
-  { path: "/login", element: <SigninPage /> },
-  { path: "/register", element: <SignupPage /> },
-]);
+import { Loader } from "lucide-react";
+import { router } from "@/router";
 
 function App() {
   const dispatch = useDispatch();
