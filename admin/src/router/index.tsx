@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import RootLayout from "@/elements/layouts/RootLayout.tsx";
-import CategoriesLayout from "@/elements/layouts/CategoriesLayout.tsx";
-import ProductsLayout from "@/elements/layouts/ProductsLayout.tsx";
-import OrdersLayout from "@/elements/layouts/OrdersLayout.tsx";
-import PromotionsLayout from "@/elements/layouts/PromotionsLayout.tsx";
-import MailsLayout from "@/elements/layouts/MailsLayout.tsx";
+import RootLayout from "@/layouts/RootLayout.tsx";
+import CategoriesLayout from "@/layouts/CategoriesLayout.tsx";
+import ProductsLayout from "@/layouts/ProductsLayout.tsx";
+import OrdersLayout from "@/layouts/OrdersLayout.tsx";
+import PromotionsLayout from "@/layouts/PromotionsLayout.tsx";
+import MailsLayout from "@/layouts/MailsLayout.tsx";
 
-import SettingsLayout from "@/elements/layouts/SettingsLayout.tsx";
+import SettingsLayout from "@/layouts/SettingsLayout.tsx";
 // Lazy-loaded page imports
 import * as Pages from "@/utils/lazy-imports.ts";
 
@@ -45,8 +45,6 @@ export const router = createBrowserRouter([
         element: <OrdersLayout />,
         children: [
           { index: true, element: <Pages.AllOrdersPage /> },
-          { path: "pending", element: <Pages.PendingOrdersPage /> },
-          { path: "completed", element: <Pages.CompletedOrdersPage /> },
           { path: "refunds", element: <Pages.RefundRequestsPage /> },
         ],
       },

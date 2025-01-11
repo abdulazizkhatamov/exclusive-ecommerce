@@ -1,11 +1,9 @@
-const fs = require("fs");
-const path = require("path");
 const mongoose = require("mongoose");
 
 const Category = require("../models/category-schema");
 const Product = require("../models/product-schema");
 const Variant = require("../models/variant-schema");
-const { parse } = require("dotenv");
+const Order = require("../models/order-schema");
 
 exports.getAdmin = async (req, res) => {
   return res.json(req.admin);
@@ -683,6 +681,42 @@ exports.deleteDeleteVariant = async (req, res) => {
     return res.status(500).json({
       message:
         "An error occurred while deleting the variant and updating product quantity",
+    });
+  }
+};
+
+exports.getOrders = async (req, res) => {
+  try {
+    const dbOrders = await Order.find().populate({
+      path: "user",
+      select: "_id email",
+    });
+
+    return res.status(200).json({ success: true, orders: dbOrders });
+  } catch (error) {
+    console.log("Error getting orders orders for user", error);
+    return res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.putUpdateOrderStatus = async (req, res) => {
+  const { _id, status } = req.body;
+
+  try {
+    const dbOrder = await Order.findById(_id);
+
+    if (!dbOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    dbOrder.orderStatus = status;
+    await dbOrder.save();
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.log("Error updating order status:", error);
+    res.status(400).json({
+      message: "An error occurred while updating order status",
+      error,
     });
   }
 };

@@ -77,14 +77,6 @@ export const sidebarMenu = {
           url: "orders",
         },
         {
-          title: "Pending Orders",
-          url: "orders/pending",
-        },
-        {
-          title: "Completed Orders",
-          url: "orders/completed",
-        },
-        {
           title: "Refund Requests",
           url: "orders/refunds",
         },

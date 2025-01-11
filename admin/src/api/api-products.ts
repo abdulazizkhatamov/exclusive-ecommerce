@@ -83,3 +83,12 @@ export const deleteDeleteProduct = async (id: string) => {
     handleError(e);
   }
 };
+
+export const getOrders = async () => {
+  try {
+    const response = await authHttpClient.get(`/api/admin/orders`);
+    return response.data;
+  } catch (e) {
+    handleError(e);
+  }
+};

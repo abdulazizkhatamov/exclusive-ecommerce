@@ -136,4 +136,8 @@ router.put(
 
 router.delete("/variants/:_id", authenticate, controller.deleteDeleteVariant);
 
+router.get("/orders", authenticate, controller.getOrders);
+
+router.put("/orders/:_id", authenticate, controller.putUpdateOrderStatus);
+
 module.exports = router;
