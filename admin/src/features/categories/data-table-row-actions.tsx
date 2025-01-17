@@ -13,8 +13,8 @@ import {
 import { categorySchema } from "@/features/categories/data/schema-categories.ts";
 
 import { useToast } from "@/hooks/use-toast.ts";
-import { DeleteCategory } from "@/features/categories/actions/DeleteCategory.tsx";
-import { UpdateCategory } from "@/features/categories/actions/UpdateCategory.tsx";
+import { DeleteCategoryDialog } from "@/features/categories/components/DeleteCategoryDialog.tsx";
+import { UpdateCategorySheet } from "@/features/categories/components/UpdateCategorySheet.tsx";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -98,12 +98,12 @@ export function DataTableRowActions<TData>({
 
   return (
     <div className="flex gap-2">
-      <UpdateCategory
+      <UpdateCategorySheet
         open={updateSheet}
         onOpenChange={() => setUpdateSheet(!updateSheet)}
         formik={updateCategoryFormik}
       />
-      <DeleteCategory
+      <DeleteCategoryDialog
         open={deleteDialog}
         onOpenChange={() => setDeleteDialog(!deleteDialog)}
         onDelete={() =>

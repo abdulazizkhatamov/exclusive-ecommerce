@@ -20,6 +20,7 @@ import * as Yup from "yup";
 
 interface CreateVariantFormProps {
   product: IProduct;
+  setCreateVariantSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const variantValidationSchema = Yup.object().shape({
@@ -29,7 +30,10 @@ const variantValidationSchema = Yup.object().shape({
   images: Yup.array(Yup.string()).required("At least one image is required"),
 });
 
-const CreateVariantForm: React.FC<CreateVariantFormProps> = ({ product }) => {
+const CreateVariantForm: React.FC<CreateVariantFormProps> = ({
+  product,
+  setCreateVariantSheet,
+}) => {
   const { toast } = useToast();
 
   const createVariantMutation = useMutation(postCreateVariant);
@@ -61,8 +65,6 @@ const CreateVariantForm: React.FC<CreateVariantFormProps> = ({ product }) => {
         formData.append("images", file); // "images" is the key for multer
       });
 
-      console.log(values.attributes);
-
       // Append 'attributes' as a single JSON string
       formData.append("attributes", JSON.stringify(values.attributes));
 
@@ -74,6 +76,7 @@ const CreateVariantForm: React.FC<CreateVariantFormProps> = ({ product }) => {
             description: new Date().toUTCString(),
           });
           resetForm();
+          setCreateVariantSheet(false);
         },
         onError: async (error) => {
           await queryClient.invalidateQueries("variants");
@@ -92,10 +95,14 @@ const CreateVariantForm: React.FC<CreateVariantFormProps> = ({ product }) => {
   // Handle multiple image file selection and update Formik state
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      // Update the Formik state with new images
       createVariantFormik.setFieldValue("images", [
         ...createVariantFormik.values.images,
         ...Array.from(e.target.files),
       ]);
+
+      // Reset the input value to allow re-selecting the same file
+      e.target.value = "";
     }
   };
 

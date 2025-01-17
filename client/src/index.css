@@ -9,6 +9,18 @@ html, body {
   margin: 0;
 }
 
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Optional: Customize the width of the scrollbar track */
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  display: none; /* Hide the thumb */
+}
+
+.hidden-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Make the track transparent */
+}
+
 /* ... */
 
 @layer base {

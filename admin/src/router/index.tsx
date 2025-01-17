@@ -61,9 +61,9 @@ export const router = createBrowserRouter([
         path: "mails",
         element: <MailsLayout />,
         children: [
-          { index: true, element: <Pages.AllMailsPage /> },
-          { path: "compose", element: <Pages.ComposeMailsPage /> },
-          { path: "templates", element: <Pages.MailsTemplatesPage /> },
+          { index: true, element: <Pages.MailsPage /> },
+          { path: "trash", element: <Pages.MailsPage /> },
+          { path: "accounts", element: <Pages.MailAccountsPage /> },
         ],
       },
       {

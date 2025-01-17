@@ -46,7 +46,10 @@ const Categories: React.FC = () => {
                 key={category._id}
                 className="basis-1/2 md:basis-1/4 lg:basis-1/6"
               >
-                <Link to={`/category/${category._id}`} className="block">
+                <Link
+                  to={`/products/category/${category._id}`}
+                  className="block"
+                >
                   <Card className="group hover:bg-primary_red hover:text-white transition-all duration-300 ease-in-out">
                     <CardContent className="flex justify-center text-center aspect-square items-center p-6">
                       <div>

@@ -75,7 +75,7 @@ const HeaderNavigation: React.FC = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 bg-black/50 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
-                <Link to={"/account"}>
+                <Link to={"/account/orders"}>
                   <DropdownMenuItem className="gap-3 p-3 focus:bg-white/20 hover:bg-white/20 rounded-md transition-colors duration-200 cursor-pointer">
                     <User className="h-5 w-5 text-white" />
                     <span className="text-white">Manage My Account</span>

@@ -9,6 +9,8 @@ router.post("/create-account", controller.postCreateAccount);
 // POST - Login account.
 router.post("/login-account", controller.postLoginAccount);
 
+router.post("/verify-account", controller.postVerifyEmail);
+
 // POST - Refresh token.
 router.get("/refresh-token", controller.getRefreshAccessToken);
 

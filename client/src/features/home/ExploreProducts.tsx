@@ -57,7 +57,7 @@ const ExploreProducts: React.FC = () => {
       </div>
       <div className=" my-14 max-w-max mx-auto">
         <div className="text-center">
-          <Link to={"/all-products"}>
+          <Link to={"/products"}>
             <button className="px-4 sm:px-8 py-2 bg-primary_red font-poppins text-[0.875rem] sm:text-[1rem] leading-[1.25rem] sm:leading-[1.5rem] text-[#FAFAFA] rounded hover:bg-red-600 transition-colors whitespace-nowrap">
               {t("page_home.sections.products.view_all")}
             </button>

@@ -21,7 +21,7 @@ import {
 import { DataTable } from "@/components/custom/table/data-table.tsx";
 import { CalendarDateRangePicker } from "@/components/custom/product/date-range-picker.tsx";
 import { Overview } from "@/components/custom/product/overview.tsx";
-import { RecentSales } from "@/components/custom/product/recent-sales.tsx";
+// import RecentSales from "@/components/custom/recent-sales.tsx";
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -239,9 +239,7 @@ const ProductPage: React.FC = () => {
                       You made 265 sales this month.
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <RecentSales />
-                  </CardContent>
+                  <CardContent>{/*<RecentSales />*/}</CardContent>
                 </Card>
               </div>
             </TabsContent>

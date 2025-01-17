@@ -2,9 +2,9 @@ const Order = require("../models/order-schema");
 const Product = require("../models/product-schema");
 
 module.exports = {
-  getBestSellingProducts: async (limit = 10) => {
+  getBestSellingProducts: async (limit) => {
     try {
-      const bestSellers = await Order.aggregate([
+      const pipeline = [
         { $unwind: "$products" }, // Flatten the products array
         {
           $group: {
@@ -13,23 +13,31 @@ module.exports = {
           },
         },
         { $sort: { totalSold: -1 } }, // Sort by total sold in descending order
-        { $limit: limit }, // Limit to top 'n' results
-      ]);
+      ];
 
-      // Check if the bestSellers array has populated values
-      if (bestSellers && bestSellers.length > 0) {
-        // Populate the product details directly in the aggregation pipeline
+      if (limit) {
+        pipeline.push({ $limit: limit }); // Add $limit conditionally
+      }
+
+      const bestSellers = await Order.aggregate(pipeline);
+
+      if (bestSellers.length > 0) {
         const populatedProducts = await Product.populate(bestSellers, {
-          path: "_id", // Populate the referenced product data
+          path: "_id",
         });
 
-        // Filter out any null products and return the populated product data
-        return populatedProducts
-          .filter((item) => item._id !== null)
-          .map((item) => item._id);
-      } else {
-        return []; // No best sellers found
+        // Ensure unique products, filter out nulls, and ensure populated products are valid
+        const uniqueProducts = Array.from(
+          new Map(
+            populatedProducts
+              .filter((item) => item._id != null) // Ensure we are not dealing with null/undefined values
+              .map((item) => [item._id.toString(), item._id]),
+          ).values(),
+        );
+
+        return uniqueProducts;
       }
+      return []; // No best sellers found
     } catch (err) {
       console.error("Error fetching best-selling products:", err);
       throw err;

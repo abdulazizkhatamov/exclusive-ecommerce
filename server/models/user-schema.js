@@ -35,6 +35,12 @@ const UserSchema = new Schema(
         phone: String,
       },
     ],
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: String,
+    verificationTokenExpiration: Date,
     cart: [
       {
         product: {

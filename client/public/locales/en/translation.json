@@ -74,6 +74,14 @@
       }
     }
   },
+  "page_product": {
+    "sections": {
+      "related_products": {
+        "red_title": "Related Items",
+        "no_products": "No products found."
+      }
+    }
+  },
   "page_auth": {
     "register": {
       "title": "Create an account",
@@ -194,7 +202,8 @@
       },
       "login": {
         "backend_responses": {
-          "invalid_credentials": "Incorrect email or password. Please try again."
+          "invalid_credentials": "Incorrect email or password. Please try again.",
+          "email_not_verified": "Your email has not been verified. Please verify your email to continue. We have sent a verification link to your registered email address."
         }
       }
     },

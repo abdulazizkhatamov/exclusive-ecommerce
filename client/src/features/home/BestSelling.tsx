@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // import ProductCard from "@/components/custom/ProductCard.tsx";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { getBestSellingProducts } from "@/api/requests.ts";
+import { getLimitedBestSellingProducts } from "@/api/requests.ts";
 import ProductCard from "@/components/custom/ProductCard.tsx";
 import { IProduct } from "@/types/product.ts";
 
@@ -11,7 +11,7 @@ const BestSelling: React.FC = () => {
   const { t } = useTranslation();
   const { data: productsResponse } = useQuery({
     queryKey: ["best-selling"],
-    queryFn: getBestSellingProducts,
+    queryFn: getLimitedBestSellingProducts,
     placeholderData: { success: false, data: [] }, // Provide default structure
   });
 
@@ -34,7 +34,7 @@ const BestSelling: React.FC = () => {
           </div>
           <div className="max-w-max">
             <div className="text-center">
-              <Link to={"/all-products"}>
+              <Link to={"/products/best-selling"}>
                 <button className="px-4 sm:px-8 py-2 bg-primary_red font-poppins text-[0.875rem] sm:text-[1rem] leading-[1.25rem] sm:leading-[1.5rem] text-[#FAFAFA] rounded hover:bg-red-600 transition-colors whitespace-nowrap">
                   {t("page_home.sections.best_selling.view_all")}
                 </button>

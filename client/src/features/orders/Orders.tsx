@@ -4,7 +4,7 @@ import { RootState } from "@/app/store.ts";
 import OrdersTable from "@/features/orders/OrdersTable.tsx";
 import { useQuery } from "react-query";
 import { getOrdersByUserID } from "@/features/orders/requests.ts";
-import PrimaryInput from "@/components/custom/PrimaryInput.tsx";
+import PrimaryTextInput from "@/components/custom/inputs/PrimaryTextInput/PrimaryTextInput.tsx";
 import { IOrder } from "@/types/order.ts";
 import { Search } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
@@ -42,7 +42,7 @@ const Orders: React.FC = () => {
     <div>
       <div className={"relative"}>
         <Search className={"absolute w-5 h-5 top-[30px] left-2"} />
-        <PrimaryInput
+        <PrimaryTextInput
           type={"text"}
           placeholder="Filter by Order ID"
           value={filter}

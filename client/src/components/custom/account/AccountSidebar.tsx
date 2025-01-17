@@ -8,31 +8,31 @@ const AccountSidebar: React.FC = () => {
         <div>
           <h3 className="font-medium mb-2">My Account</h3>
           <ul className="space-y-2 text-sm">
-            <li>
-              <NavLink
-                to="/account"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#db4444]"
-                    : "text-gray-600 hover:text-[#db4444]"
-                }
-                end
-              >
-                Personal info
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/account/security"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#db4444]"
-                    : "text-gray-600 hover:text-[#db4444]"
-                }
-              >
-                Security
-              </NavLink>
-            </li>
+            {/*<li>*/}
+            {/*  <NavLink*/}
+            {/*    to="/account"*/}
+            {/*    className={({ isActive }) =>*/}
+            {/*      isActive*/}
+            {/*        ? "text-[#db4444]"*/}
+            {/*        : "text-gray-600 hover:text-[#db4444]"*/}
+            {/*    }*/}
+            {/*    end*/}
+            {/*  >*/}
+            {/*    Personal info*/}
+            {/*  </NavLink>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+            {/*  <NavLink*/}
+            {/*    to="/account/security"*/}
+            {/*    className={({ isActive }) =>*/}
+            {/*      isActive*/}
+            {/*        ? "text-[#db4444]"*/}
+            {/*        : "text-gray-600 hover:text-[#db4444]"*/}
+            {/*    }*/}
+            {/*  >*/}
+            {/*    Security*/}
+            {/*  </NavLink>*/}
+            {/*</li>*/}
             <li>
               <NavLink
                 to="/account/orders"

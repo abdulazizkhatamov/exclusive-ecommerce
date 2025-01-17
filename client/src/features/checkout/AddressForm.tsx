@@ -1,5 +1,5 @@
 import React from "react";
-import PrimaryInput from "@/components/custom/PrimaryInput.tsx";
+import PrimaryTextInput from "@/components/custom/inputs/PrimaryTextInput/PrimaryTextInput.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -53,7 +53,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit, isLoading }) => {
           <label htmlFor={field} className="block text-sm mb-2">
             {label}
           </label>
-          <PrimaryInput
+          <PrimaryTextInput
             id={field}
             type="text"
             className="w-full p-3"

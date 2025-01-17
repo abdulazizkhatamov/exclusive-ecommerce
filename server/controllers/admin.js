@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
+const postmark = require("postmark");
 
+const Admin = require("../models/admin-schema");
 const Category = require("../models/category-schema");
 const Product = require("../models/product-schema");
 const Variant = require("../models/variant-schema");
 const Order = require("../models/order-schema");
+const Email = require("../models/email-schema");
+const dbemail = require("debug");
 
 exports.getAdmin = async (req, res) => {
   return res.json(req.admin);
@@ -155,7 +159,6 @@ exports.getSubcategoriesByParent = async (req, res) => {
       },
     ]);
 
-    console.log("Subcategories:", subcategories); // Debug the result
     res.status(200).json(subcategories);
   } catch (error) {
     console.error("Error fetching subcategories:", error);
@@ -214,8 +217,6 @@ exports.postCreateCategory = async (req, res) => {
 
 exports.putUpdateCategory = async (req, res) => {
   const { _id, name, description, status, parent } = req.body;
-
-  console.log(req.body);
 
   // Step 1: Validate input
   if (!_id || !name || !description) {
@@ -343,10 +344,23 @@ exports.getProducts = async (req, res) => {
   }
 };
 
+exports.getCategoryProducts = async (req, res) => {
+  const { categoryId } = req.params;
+  try {
+    const products = await Product.find({ category: categoryId })
+      .populate("category")
+      .populate("variants")
+      .exec();
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 exports.getProduct = async (req, res) => {
   const { _id } = req.params;
-
-  console.log(_id);
 
   try {
     const product = await Product.findById(_id)
@@ -703,20 +717,329 @@ exports.putUpdateOrderStatus = async (req, res) => {
   const { _id, status } = req.body;
 
   try {
-    const dbOrder = await Order.findById(_id);
+    // Fetch the order from the database
+    const dbOrder = await Order.findById(_id)
+      .populate("products.product")
+      .populate("products.variant");
 
     if (!dbOrder) {
       return res.status(404).json({ message: "Order not found" });
     }
 
+    if (status === "Shipped") {
+      // Iterate through products in the order
+      for (const orderProduct of dbOrder.products) {
+        const { product, variant, quantity } = orderProduct;
+
+        // Update the Product model
+        const productDoc = await Product.findById(product._id);
+        if (productDoc) {
+          productDoc.quantity -= quantity;
+          if (productDoc.quantity < 0) {
+            return res.status(400).json({
+              message: `Insufficient stock for product ${productDoc.name}`,
+            });
+          }
+          await productDoc.save();
+        }
+
+        // Update the Variant model
+        const variantDoc = await Variant.findById(variant._id);
+        if (variantDoc) {
+          variantDoc.stock -= quantity;
+          if (variantDoc.stock < 0) {
+            return res.status(400).json({
+              message: `Insufficient stock for variant ${variantDoc.sku}`,
+            });
+          }
+          await variantDoc.save();
+        }
+      }
+    }
+
+    // Update the order status
     dbOrder.orderStatus = status;
     await dbOrder.save();
+
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.log("Error updating order status:", error);
+    console.error("Error updating order status:", error);
     res.status(400).json({
       message: "An error occurred while updating order status",
       error,
     });
+  }
+};
+
+exports.getMailAccounts = async (req, res) => {
+  const admin = req.admin;
+
+  try {
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    return res.status(200).json(dbAdmin.mail_accounts);
+  } catch (error) {
+    console.error("Error getting mail accounts", error);
+    return res.status(400).json({ message: "Server error", error });
+  }
+};
+
+exports.postCreateMailAccount = async (req, res) => {
+  const admin = req.admin;
+
+  try {
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    dbAdmin.mail_accounts.push(req.body);
+    await dbAdmin.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "Successfully created account" });
+  } catch (e) {
+    console.error("Error posting mail account", e);
+    return res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.postDeleteMailAccount = async (req, res) => {
+  const admin = req.admin;
+
+  try {
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    const { key } = req.body;
+
+    // Check if the mail account with the given key exists
+    const accountIndex = dbAdmin.mail_accounts.findIndex(
+      (account) => account.key === key,
+    );
+
+    if (accountIndex === -1) {
+      return res.status(404).json({ message: "Mail account not found" });
+    }
+
+    // Remove the mail account from the array
+    dbAdmin.mail_accounts.splice(accountIndex, 1);
+    await dbAdmin.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Successfully deleted account" });
+  } catch (e) {
+    console.error("Error deleting mail account", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.getInboxMails = async (req, res) => {
+  try {
+    const dbEmails = await Email.find({ isDeleted: false });
+
+    return res.status(200).json(dbEmails);
+  } catch (e) {
+    console.error("Error getting mails", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.getTrashMails = async (req, res) => {
+  try {
+    const dbEmails = await Email.find({ isDeleted: true });
+
+    return res.status(200).json(dbEmails);
+  } catch (e) {
+    console.error("Error getting mails", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.putUpdateMsgStatus = async (req, res) => {
+  const { status } = req.body;
+  const { _id: emailId } = req.params;
+
+  try {
+    const dbEmail = await Email.findById(emailId);
+
+    if (!dbEmail) {
+      return res.status(400).json({ message: "Mail not found" });
+    }
+
+    dbEmail.messages[dbEmail.messages.length - 1].isRead = status;
+    await dbEmail.save();
+    return res.status(200).json({ success: true });
+  } catch (e) {
+    console.error("Error updating mail account", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.deleteDeleteMailMsg = async (req, res) => {
+  const { _id: emailId } = req.params;
+  const { type } = req.body;
+
+  if (!emailId) {
+    return res.status(400).json({ message: "Email ID is required" });
+  }
+
+  if (!type || (type !== "TRASH" && type !== "DELETE" && type !== "RECOVER")) {
+    return res
+      .status(400)
+      .json({ message: "Invalid or missing type parameter" });
+  }
+
+  try {
+    const dbEmail = await Email.findById(emailId);
+
+    if (!dbEmail) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    if (type === "TRASH") {
+      dbEmail.isDeleted = true;
+      await dbEmail.save();
+      return res
+        .status(200)
+        .json({ success: true, message: "Email moved to trash" });
+    }
+
+    if (type === "RECOVER") {
+      dbEmail.isDeleted = false;
+      await dbEmail.save();
+      return res
+        .status(200)
+        .json({ success: true, message: "Email recovered from trash" });
+    }
+
+    await dbEmail.deleteOne(); // Use deleteOne for better clarity
+    return res
+      .status(200)
+      .json({ success: true, message: "Email deleted permanently" });
+  } catch (e) {
+    console.error("Error processing delete request:", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.postSendMessage = async (req, res) => {
+  const { _id, message, apiKey } = req.body;
+  const { _id: adminId } = req.admin;
+
+  if (!_id || !message || !apiKey) {
+    return res.status(400).json({
+      message: "Invalid input: _id, message, and apiKey are required.",
+    });
+  }
+
+  try {
+    const dbAdmin = await Admin.findById(adminId);
+
+    if (!dbAdmin) {
+      return res.status(400).json({ message: "Admin not found" });
+    }
+
+    const postmarkKey = dbAdmin.mail_accounts.find(
+      (account) => account._id.toString() === apiKey,
+    )?.key;
+    const postmarkAccount = dbAdmin.mail_accounts.find(
+      (account) => account._id.toString() === postmarkKey,
+    )?.name;
+
+    if (!postmarkKey) {
+      return res
+        .status(400)
+        .json({ message: "Invalid API key, please provide a valid key." });
+    }
+
+    const dbEmail = await Email.findById(_id);
+
+    if (!dbEmail) {
+      return res.status(400).json({ message: "Email not found" });
+    }
+
+    // Add the new message from the admin
+    const newMessage = {
+      sender: "admin",
+      message: message,
+      sentAt: new Date(),
+      isRead: true,
+    };
+
+    dbEmail.messages.push(newMessage);
+    await dbEmail.save();
+
+    // Prepare the conversation history excluding the current message
+    const conversationHistory = dbEmail.messages
+      .filter(
+        (msg) =>
+          msg.message !== message ||
+          msg.sentAt.toISOString() !== newMessage.sentAt.toISOString(),
+      )
+      .map(
+        (msg) => `
+        <p><strong>${msg.sender === "admin" ? "Support" : dbEmail.participant.name}:</strong> ${msg.message}</p>
+        <p><em>Sent at: ${new Date(msg.sentAt).toLocaleString()}</em></p>
+        <hr>
+      `,
+      )
+      .join("");
+
+    // Initialize Postmark client
+    const postmarkClient = new postmark.ServerClient(postmarkKey);
+
+    // Send an email to the user via Postmark
+    await postmarkClient.sendEmail({
+      From: postmarkAccount, // Your email address
+      To: dbEmail.participant.email,
+      Subject: "You have a new message from the Support",
+      HtmlBody: `
+        <p>Dear ${dbEmail.participant.name},</p>
+        <p>You have a new message from the Support. Here is the conversation history:</p>
+        ${conversationHistory}
+        <p><strong>New message from Support:</strong></p>
+        <p><em>${message}</em></p>
+      `,
+      TextBody: `
+        Dear ${dbEmail.participant.name},
+        
+        You have a new message from the Support. Here is the conversation history:
+         
+        ${dbEmail.messages
+          .filter(
+            (msg) =>
+              msg.message !== message ||
+              msg.sentAt.toISOString() !== newMessage.sentAt.toISOString(),
+          )
+          .map(
+            (msg) =>
+              `${
+                msg.sender === "admin" ? "Support" : dbEmail.participant.name
+              }: ${msg.message}\nSent at: ${new Date(
+                msg.sentAt,
+              ).toLocaleString()}`,
+          )
+          .join("\n\n")}
+        
+        New message from Support:
+        ${message}  
+      `,
+      MessageStream: "outbound",
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (e) {
+    console.error("Error posting send message", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
   }
 };

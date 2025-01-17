@@ -18,7 +18,7 @@ export interface IProduct {
   discount?: number; // Discount percentage (optional, default is 0)
   attributes: ProductAttribute[]; // Array of attributes
   quantity?: number; // Available quantity (optional, default is 0)
-  images?: string[]; // Array of product image URLs (optional)
+  images: string[]; // Array of product image URLs (optional)
   category: ICategory; // Reference to the category
   variants?: IVariant; // References to the Variant model (optional)
   createdAt?: Date; // Automatically added by Mongoose (optional)

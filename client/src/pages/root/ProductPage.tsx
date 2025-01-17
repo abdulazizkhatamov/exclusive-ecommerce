@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Product from "@/features/product/Product";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { updateCart } from "@/features/auth/auth-slice.ts";
 import { postAddToCart } from "@/features/cart/requests.ts";
 import { ICartItem } from "@/types/user.ts";
+import { getRelatedProducts } from "@/features/product/requests.ts";
+import RelatedProducts from "@/features/product/RelatedProducts.tsx";
 
 const ProductPage: React.FC = () => {
   const { _id } = useParams();
@@ -19,6 +21,11 @@ const ProductPage: React.FC = () => {
   }, [_id, navigate]);
 
   const mutation = useMutation({ mutationFn: postAddToCart });
+  const { data: relatedProducts } = useQuery({
+    queryKey: ["related-products", _id],
+    queryFn: () => getRelatedProducts(_id as string),
+    enabled: !!_id,
+  });
 
   const handleAddToCart = (product: ICartItem) => {
     mutation.mutate(product, {
@@ -31,9 +38,7 @@ const ProductPage: React.FC = () => {
   return (
     <main className="container mx-auto px-4 pt-10 mb-32">
       {_id && <Product _id={_id} addToCart={handleAddToCart} />}
-      <div>
-        <h2>Cart</h2>
-      </div>
+      {relatedProducts && <RelatedProducts products={relatedProducts} />}
     </main>
   );
 };

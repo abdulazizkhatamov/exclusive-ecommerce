@@ -5,7 +5,7 @@ import {
   ShoppingBasket,
   SquareStack,
   SquareTerminal,
-  Tag,
+  // Tag,
 } from "lucide-react";
 
 export const sidebarMenu = {
@@ -22,14 +22,6 @@ export const sidebarMenu = {
         {
           title: "Overview",
           url: "",
-        },
-        {
-          title: "Analytics",
-          url: "analytics",
-        },
-        {
-          title: "Activity Log",
-          url: "activity-log",
         },
       ],
     },
@@ -61,10 +53,10 @@ export const sidebarMenu = {
           title: "Add Product",
           url: "products/add",
         },
-        {
-          title: "Inventory Management",
-          url: "products/inventory",
-        },
+        // {
+        //   title: "Inventory Management",
+        //   url: "products/inventory",
+        // },
       ],
     },
     {
@@ -76,31 +68,23 @@ export const sidebarMenu = {
           title: "All Orders",
           url: "orders",
         },
-        {
-          title: "Refund Requests",
-          url: "orders/refunds",
-        },
       ],
     },
-    {
-      title: "Promotions",
-      url: "#",
-      icon: Tag,
-      items: [
-        {
-          title: "All Promotions",
-          url: "promotions",
-        },
-        {
-          title: "Create Promotion",
-          url: "promotions/create",
-        },
-        {
-          title: "Discount Codes",
-          url: "promotions/discount-codes",
-        },
-      ],
-    },
+    // {
+    //   title: "Promotions",
+    //   url: "#",
+    //   icon: Tag,
+    //   items: [
+    //     {
+    //       title: "All Promotions",
+    //       url: "promotions",
+    //     },
+    //     {
+    //       title: "Create Promotion",
+    //       url: "promotions/create",
+    //     },
+    //   ],
+    // },
     {
       title: "Mails",
       url: "#",
@@ -111,12 +95,8 @@ export const sidebarMenu = {
           url: "mails",
         },
         {
-          title: "Compose Mail",
-          url: "mails/compose",
-        },
-        {
-          title: "Mail Templates",
-          url: "mails/templates",
+          title: "Mail Accounts",
+          url: "mails/accounts",
         },
       ],
     },

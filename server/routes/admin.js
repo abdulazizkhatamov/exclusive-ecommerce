@@ -33,6 +33,8 @@ router.delete(
 
 router.get("/products", authenticate, controller.getProducts);
 
+router.get("/products/category/:categoryId", controller.getCategoryProducts);
+
 router.get("/products/:_id", authenticate, controller.getProduct);
 
 // Upload images and create product
@@ -139,5 +141,25 @@ router.delete("/variants/:_id", authenticate, controller.deleteDeleteVariant);
 router.get("/orders", authenticate, controller.getOrders);
 
 router.put("/orders/:_id", authenticate, controller.putUpdateOrderStatus);
+
+router.get("/mail/accounts", authenticate, controller.getMailAccounts);
+
+router.post("/mail/accounts", authenticate, controller.postCreateMailAccount);
+
+router.delete("/mail/accounts", authenticate, controller.postDeleteMailAccount);
+
+router.get("/mails/inbox", authenticate, controller.getInboxMails);
+
+router.get("/mails/trash", authenticate, controller.getTrashMails);
+
+router.put("/mail/status/:_id", authenticate, controller.putUpdateMsgStatus);
+
+router.delete(
+  "/mail/delete/:_id",
+  authenticate,
+  controller.deleteDeleteMailMsg,
+);
+
+router.post("/mail/message", authenticate, controller.postSendMessage);
 
 module.exports = router;

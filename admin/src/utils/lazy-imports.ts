@@ -6,12 +6,7 @@ import { lazy } from "react";
 export const OverviewPage = lazy(
   () => import("@/pages/Dashboard/OverviewPage.tsx"),
 );
-export const AnalyticsPage = lazy(
-  () => import("@/pages/Dashboard/AnalyticsPage.tsx"),
-);
-export const ActivityLogPage = lazy(
-  () => import("@/pages/Dashboard/ActivityLogPage.tsx"),
-);
+
 export const CategoriesPage = lazy(
   () => import("@/pages/Categories/CategoriesPage.tsx"),
 );
@@ -42,27 +37,20 @@ export const ProductInventoryPage = lazy(
 export const AllOrdersPage = lazy(
   () => import("@/pages/Orders/AllOrdersPage.tsx"),
 );
-export const RefundRequestsPage = lazy(
-  () => import("@/pages/Orders/RefundRequestsPage.tsx"),
-);
+
 export const AllPromotionsPage = lazy(
   () => import("@/pages/Promotions/AllPromotionsPage.tsx"),
 );
 export const CreatePromotionPage = lazy(
   () => import("@/pages/Promotions/CreatePromotionPage.tsx"),
 );
-export const DiscountCodesPage = lazy(
-  () => import("@/pages/Promotions/DiscountCodesPage.tsx"),
+
+export const MailsPage = lazy(() => import("@/pages/Mails/MailsPage.tsx"));
+
+export const MailAccountsPage = lazy(
+  () => import("@/pages/Mails/MailAccountsPage.tsx"),
 );
-export const AllMailsPage = lazy(
-  () => import("@/pages/Mails/AllMailsPage.tsx"),
-);
-export const ComposeMailsPage = lazy(
-  () => import("@/pages/Mails/ComposeMailsPage.tsx"),
-);
-export const MailsTemplatesPage = lazy(
-  () => import("@/pages/Mails/MailsTemplatesPage.tsx"),
-);
+
 export const GeneralSettingsPage = lazy(
   () => import("@/pages/Settings/GeneralSettingsPage.tsx"),
 );

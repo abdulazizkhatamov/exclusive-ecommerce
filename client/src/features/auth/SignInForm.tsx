@@ -14,6 +14,7 @@ import { postLoginAccount } from "@/features/auth/reqests.ts";
 
 const SignInForm: React.FC = () => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -55,9 +56,15 @@ const SignInForm: React.FC = () => {
           }
         >
           <AlertCircle className={"w-4 h-4 inline-block mr-3"} />
-          {mutation.error instanceof Error
-            ? t(`errors.auth.login.backend_responses.${mutation.error.message}`)
-            : t("errors.error_occurred")}
+          {mutation.error instanceof Error ? (
+            <>
+              {t(
+                `errors.auth.login.backend_responses.${mutation.error.message}`,
+              )}
+            </>
+          ) : (
+            t("errors.error_occurred")
+          )}
         </div>
       )}
       <div className="space-y-2">

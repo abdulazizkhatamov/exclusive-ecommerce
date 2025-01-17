@@ -4,6 +4,7 @@ import * as Pages from "@/utils/lazy-imports.ts";
 
 import RootLayout from "@/layouts/RootLayout.tsx";
 import AccountLayout from "@/layouts/AccountLayout.tsx";
+import ProductsLayout from "@/layouts/ProductsLayout.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,16 @@ export const router = createBrowserRouter([
       { path: "404", element: <Pages.NotFoundPage /> },
     ],
   },
+  {
+    path: "/products",
+    element: <ProductsLayout />,
+    children: [
+      { index: true, element: <Pages.ProductsPage /> },
+      { path: "category/:id", element: <Pages.CategoryProductsPage /> },
+      { path: "best-selling", element: <Pages.BestSellingProductsPage /> },
+    ],
+  },
   { path: "/signin", element: <Pages.SignInPage /> },
   { path: "/signup", element: <Pages.SignUpPage /> },
+  { path: "/verify-email", element: <Pages.VerifyEmailPage /> },
 ]);

@@ -52,7 +52,7 @@ const CreateSubcategoryForm: React.FC<CreateSubcategoryFormProps> = ({
       createSubcategoryMutation.mutate(values, {
         onSuccess: async () => {
           await queryClient.invalidateQueries({
-            queryKey: ["subcategories", parent],
+            queryKey: ["subcategories"],
           });
           setCreateSheet(false);
           toast({
@@ -63,7 +63,7 @@ const CreateSubcategoryForm: React.FC<CreateSubcategoryFormProps> = ({
         },
         onError: async (error) => {
           await queryClient.invalidateQueries({
-            queryKey: ["subcategories", parent],
+            queryKey: ["subcategories"],
           });
           const message =
             error instanceof Error ? error.message : "An error occurred";

@@ -35,7 +35,10 @@ const CreateVariantSheet: React.FC<CreateVariantSheetProps> = ({
             Set up a new variant for your product.
           </SheetDescription>
         </SheetHeader>
-        <CreateVariantForm product={product} />
+        <CreateVariantForm
+          setCreateVariantSheet={setCreateVariantSheet}
+          product={product}
+        />
       </SheetContent>
     </Sheet>
   );

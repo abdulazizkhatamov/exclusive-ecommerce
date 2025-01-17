@@ -21,6 +21,17 @@ export const getProducts = async () => {
   }
 };
 
+export const getProductsByCategory = async (categoryId: string) => {
+  try {
+    const response = await authHttpClient.get(
+      `/api/admin/products/category/${categoryId}`,
+    );
+    return response.data;
+  } catch (e) {
+    handleError(e);
+  }
+};
+
 export const getProduct = async (_id: string) => {
   try {
     const response = await authHttpClient.get(`/api/admin/products/${_id}`);

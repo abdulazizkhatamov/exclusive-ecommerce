@@ -29,9 +29,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="relative aspect-square bg-gray-100 flex justify-center">
         <Link to={`/product/${product._id}`} className={"flex justify-center"}>
           <img
-            src={product.images?.[0] || "/placeholder.png"}
+            src={`/${product.images?.[0]}`}
             alt={product._id}
-            className="object-contain p-10"
+            className="object-cover p-10"
           />
         </Link>
         <Link to={`/product/${product._id}`}>

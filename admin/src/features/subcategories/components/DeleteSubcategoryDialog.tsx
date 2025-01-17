@@ -33,7 +33,7 @@ const DeleteSubcategoryDelete: React.FC<DeleteSubcategoryDeleteProps> = ({
     mutationFn: deleteDeleteCategory,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["subcategories", parent],
+        queryKey: ["subcategories"],
       });
       setDeleteDialog(false);
       toast({
@@ -43,7 +43,7 @@ const DeleteSubcategoryDelete: React.FC<DeleteSubcategoryDeleteProps> = ({
     },
     onError: async (error) => {
       await queryClient.invalidateQueries({
-        queryKey: ["subcategories", parent],
+        queryKey: ["subcategories"],
       });
       const message =
         error instanceof Error ? error.message : "An error occurred";

@@ -18,3 +18,20 @@ export const getProductById = async (_id: string) => {
     throw new Error("An unexpected error occurred");
   }
 };
+
+export const getRelatedProducts = async (id: string) => {
+  try {
+    const response = await axios.get(`/api/products/related/${id}`);
+
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.data?.message) {
+        throw new Error(e.response.data.message);
+      }
+      throw new Error("An error occurred while getting the related products");
+    }
+
+    throw new Error("An unexpected error occurred");
+  }
+};

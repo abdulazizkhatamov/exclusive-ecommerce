@@ -37,25 +37,26 @@ const UpdateStatus: React.FC<UpdateStatusProps> = ({
 
   return (
     <DrawerFooter className="flex justify-center gap-4 mt-6">
-      {currentStep < statuses.length - 1 && (
-        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>{getNextStatusButtonText()}</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Update status</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to update the status of this order? This
-                action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button onClick={updateStatus}>Update</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+      {currentStep < statuses.length - 1 &&
+        !["Placed"].includes(order.orderStatus) && (
+          <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>{getNextStatusButtonText()}</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Update status</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to update the status of this order? This
+                  action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button onClick={updateStatus}>Update</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       <DrawerClose asChild>
         <Button variant="outline" className="text-gray-600 border-gray-300">
           Cancel

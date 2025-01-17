@@ -18,7 +18,7 @@ module.exports = {
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: "payment",
-        success_url: `http://localhost:5174/account/orders?id=${orderId}`,
+        success_url: `http://localhost:5173/account/orders?id=${orderId}`,
         customer_email: email,
         metadata: {
           orderId,

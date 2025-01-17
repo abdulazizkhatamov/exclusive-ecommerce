@@ -37,7 +37,7 @@ export function HomeHeaderNav() {
       if (!category.parent) {
         acc.push({
           name: category.name,
-          href: `/category/${category._id}`,
+          href: `/products/category/${category._id}`,
           subcategories: [],
         });
       } else {
@@ -47,7 +47,7 @@ export function HomeHeaderNav() {
         if (parentCategory) {
           parentCategory.subcategories.push({
             name: category.name,
-            href: `/category/${category._id}`,
+            href: `/products/category/${category._id}`,
           });
         }
       }

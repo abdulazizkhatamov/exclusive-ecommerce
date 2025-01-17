@@ -275,8 +275,6 @@ exports.postCreateOrder = async (req, res) => {
     const { products, billingDetails, paymentMethod, totalAmount } = req.body;
     const userId = req.user._id;
 
-    console.log(products);
-
     // Validate the products in the order
     if (!products || products.length === 0) {
       return res.status(400).json({ message: "No products in the order" });

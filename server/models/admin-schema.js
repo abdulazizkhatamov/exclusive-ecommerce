@@ -19,6 +19,12 @@ const AdminSchema = new Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
     },
+    mail_accounts: [
+      {
+        name: { type: String, required: true },
+        key: { type: String, required: true, unique: true },
+      },
+    ],
   },
   { timestamps: true },
 );

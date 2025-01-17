@@ -52,6 +52,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ cartItems }) => {
         <Button
           className="w-full bg-red-500 hover:bg-red-600"
           onClick={handleCheckout}
+          disabled={!cartItems.length}
         >
           Proceed to checkout
         </Button>

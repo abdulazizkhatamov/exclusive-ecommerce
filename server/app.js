@@ -20,6 +20,8 @@ const userRouter = require("./routes/user");
 const adminAuthRouter = require("./routes/admin-auth");
 const adminRouter = require("./routes/admin");
 
+const analyticsRouter = require("./routes/analytics");
+
 const app = express();
 
 app.use("/api", require("./routes/webhooks"));
@@ -44,6 +46,8 @@ app.use("/api/user", userRouter);
 
 app.use("/api/admin/auth", adminAuthRouter);
 app.use("/api/admin", adminRouter);
+
+app.use("/api/analytics", analyticsRouter);
 
 /**
  * Get port from environment and store in Express.

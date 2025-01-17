@@ -1,6 +1,6 @@
 import React from "react";
 import HomeHeader from "@/features/home/home-header/HomeHeader.tsx";
-import FlashSales from "@/features/home/FlashSales.tsx";
+// import FlashSales from "@/features/home/FlashSales.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import Categories from "@/features/home/Categories.tsx";
 import BestSelling from "@/features/home/BestSelling.tsx";
@@ -13,11 +13,11 @@ const HomePage: React.FC = () => {
   return (
     <main className={"container mx-auto px-4 pt-10 mb-32"}>
       <HomeHeader />
-      <FlashSales />
+      {/*<FlashSales />*/}
+      <BestSelling />
       <Separator />
       <Categories />
       <Separator />
-      <BestSelling />
       <Showcase />
       <ExploreProducts />
       <Featured />

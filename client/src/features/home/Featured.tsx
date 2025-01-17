@@ -33,7 +33,7 @@ const Featured: React.FC = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="lg:col-span-2 lg:row-span-2 relative group overflow-hidden rounded-lg bg-black">
-          <Link to="/playstation" className="block">
+          <Link to="#" className="block">
             <img
               src={imageFeaturedPS5}
               alt="PlayStation 5 Black and White"
@@ -57,7 +57,7 @@ const Featured: React.FC = () => {
           </Link>
         </div>
         <div className="lg:col-span-2 relative group overflow-hidden rounded-lg bg-black">
-          <Link to="/womens-collections" className="block">
+          <Link to="#" className="block">
             <img
               src={imageFeaturedWoman}
               alt={imageFeaturedWoman}
@@ -79,7 +79,7 @@ const Featured: React.FC = () => {
           </Link>
         </div>
         <div className="relative group overflow-hidden rounded-lg bg-black py-10">
-          <Link to="/speakers" className="block">
+          <Link to="#" className="block">
             <img
               src={imageFromFeaturedSpeakers}
               alt={imageFromFeaturedSpeakers}
@@ -103,7 +103,7 @@ const Featured: React.FC = () => {
           </Link>
         </div>
         <div className="relative group overflow-hidden rounded-lg bg-black py-10">
-          <Link to="/perfume" className="block">
+          <Link to="#" className="block">
             <img
               src={imageFeaturedPerfume}
               alt="Gucci Perfume"

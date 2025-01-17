@@ -47,6 +47,21 @@ export const postLoginAccount = async (data: {
   }
 };
 
+export const postVerifyAccount = async (data: { token: string }) => {
+  try {
+    const response = await axios.post("/api/user/auth/verify-account", data);
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.data?.message) {
+        throw new Error(e.response.data.message);
+      }
+      throw new Error("An error occurred while verify account");
+    }
+    throw new Error("An unexpected error occurred");
+  }
+};
+
 export const postLogoutAccount = async () => {
   try {
     await axios.post("/api/user/auth/logout-account", {

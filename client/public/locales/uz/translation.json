@@ -71,6 +71,14 @@
       }
     }
   },
+  "page_product": {
+    "sections": {
+      "related_products": {
+        "red_title": "O'xshash maxsulotlar",
+        "no_products": "Hech qanday mahsulot topilmadi."
+      }
+    }
+  },
   "page_auth": {
     "register": {
       "title": "Hisob ochish",
@@ -191,7 +199,8 @@
       },
       "login": {
         "backend_responses": {
-          "invalid_credentials": "Elektron pochta yoki parol xato. Iltimos, qayta urinib koʻring."
+          "invalid_credentials": "Elektron pochta yoki parol xato. Iltimos, qayta urinib koʻring.",
+          "email_not_verified": "Emailingiz tasdiqlanmagan. Davom etish uchun elektron pochta manzilingizni tasdiqlang. Biz roʻyxatdan oʻtgan elektron pochta manzilingizga tasdiqlash havolasini yubordik."
         }
       }
     },
