@@ -17,8 +17,8 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <Pages.OverviewPage /> },
-      { path: "analytics", element: <Pages.AnalyticsPage /> },
-      { path: "activity-log", element: <Pages.ActivityLogPage /> },
+      // { path: "analytics", element: <Pages.AnalyticsPage /> },
+      // { path: "activity-log", element: <Pages.ActivityLogPage /> },
       {
         path: "categories",
         element: <CategoriesLayout />,
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <OrdersLayout />,
         children: [
           { index: true, element: <Pages.AllOrdersPage /> },
-          { path: "refunds", element: <Pages.RefundRequestsPage /> },
+          // { path: "refunds", element: <Pages.RefundRequestsPage /> },
         ],
       },
       {
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <Pages.AllPromotionsPage /> },
           { path: "create", element: <Pages.CreatePromotionPage /> },
-          { path: "discount-codes", element: <Pages.DiscountCodesPage /> },
+          // { path: "discount-codes", element: <Pages.DiscountCodesPage /> },
         ],
       },
       {
