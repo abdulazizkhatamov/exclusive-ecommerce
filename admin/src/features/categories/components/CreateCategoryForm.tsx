@@ -10,6 +10,7 @@ import { postCreateCategory } from "@/api/api-categories.ts";
 import { useFormik } from "formik";
 import { queryClient } from "@/api/api.ts";
 import * as Yup from "yup";
+import { Loader } from "lucide-react";
 
 interface CreateCategoryFormProps {
   setCreateCategorySheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -101,8 +102,16 @@ const CreateCategoryForm: React.FC<CreateCategoryFormProps> = ({
           }
         />
       </div>
-      <Button type="submit" className="btn btn-primary">
-        Create
+      <Button
+        type="submit"
+        className="btn btn-primary"
+        disabled={createCategoryMutation.isLoading}
+      >
+        {createCategoryMutation.isLoading ? (
+          <Loader className={"h-4 w-4 animate-spin"} />
+        ) : (
+          "Create"
+        )}
       </Button>
     </form>
   );

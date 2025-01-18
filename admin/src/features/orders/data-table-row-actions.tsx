@@ -88,6 +88,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
                   isDialogOpen={isDialogOpen}
                   setDialogOpen={setDialogOpen}
                   updateStatus={updateStatus}
+                  isUpdating={mutation.isLoading}
                 />
               </div>
             </div>

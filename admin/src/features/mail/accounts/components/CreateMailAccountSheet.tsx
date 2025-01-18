@@ -29,9 +29,9 @@ const CreateMailAccountSheet: React.FC<CreateMailAccountSheetProps> = ({
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Add a New Subcategory</SheetTitle>
+          <SheetTitle>Add a New Account</SheetTitle>
           <SheetDescription>
-            Set up a new subcategory for your store’s products.
+            Set up a new mail account for your store.
           </SheetDescription>
         </SheetHeader>
         <CreateMailAccountForm setCreateAccountSheet={setCreateAccountSheet} />

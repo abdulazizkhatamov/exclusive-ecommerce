@@ -25,7 +25,6 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
             className={`w-24 h-20 mb-4 p-1 object-cover rounded-md cursor-pointer ${
               index === currentImageIndex ? "border-2 border-primary_red" : ""
             }`}
-            loading={"lazy"}
             onClick={() => dispatch(setCurrentImageIndex(index))}
           />
         ))}

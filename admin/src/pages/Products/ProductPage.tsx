@@ -38,6 +38,7 @@ import { getVariantsByProduct } from "@/api/api-variants.ts";
 import { columns } from "@/features/variants/columns.tsx";
 import { DataTableToolbar } from "@/features/variants/data-table-toolbar.tsx";
 import { DataTablePagination } from "@/components/custom/table/data-table-pagination.tsx";
+import { Loader } from "lucide-react";
 
 const ProductPage: React.FC = () => {
   const { _id } = useParams();
@@ -95,7 +96,12 @@ const ProductPage: React.FC = () => {
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
-  if (productLoading || variantsLoading) return <div>Loading...</div>;
+  if (productLoading || variantsLoading)
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <Loader className="mr-2 h-4 w-4 animate-spin" />
+      </div>
+    );
   if (productError || variantsError) return <div>Error loading data.</div>;
   if (!product) return null;
 

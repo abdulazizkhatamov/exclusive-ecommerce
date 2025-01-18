@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 import { useToast } from "@/hooks/use-toast.ts";
 import { useMutation } from "react-query";
 import { postCreateVariant } from "@/api/api-variants.ts";
@@ -247,7 +247,9 @@ const CreateVariantForm: React.FC<CreateVariantFormProps> = ({
                 </div>
                 <div className="flex-1">
                   <span className="text-sm font-medium text-gray-700">
-                    {(image as File).name}
+                    {(image as File).name.length > 20
+                      ? `${(image as File).name.substring(0, 17)}....`
+                      : (image as File).name}
                   </span>
                 </div>
               </div>
@@ -262,8 +264,16 @@ const CreateVariantForm: React.FC<CreateVariantFormProps> = ({
           ))}
         </div>
       </div>
-      <Button type="submit" className="btn btn-primary">
-        Create
+      <Button
+        type="submit"
+        className="btn btn-primary"
+        disabled={createVariantMutation.isLoading}
+      >
+        {createVariantMutation.isLoading ? (
+          <Loader className={"w-4 h-4 animate-spin"} />
+        ) : (
+          "Create"
+        )}
       </Button>
     </form>
   );

@@ -1,5 +1,6 @@
 import {
   Mail,
+  MessageSquareMore,
   Settings,
   ShoppingBag,
   ShoppingBasket,
@@ -95,8 +96,23 @@ export const sidebarMenu = {
           url: "mails",
         },
         {
-          title: "Mail Accounts",
+          title: "Chat Accounts",
           url: "mails/accounts",
+        },
+      ],
+    },
+    {
+      title: "Chats",
+      url: "#",
+      icon: MessageSquareMore,
+      items: [
+        {
+          title: "All Chats",
+          url: "chats",
+        },
+        {
+          title: "Chat Accounts",
+          url: "chats/accounts",
         },
       ],
     },

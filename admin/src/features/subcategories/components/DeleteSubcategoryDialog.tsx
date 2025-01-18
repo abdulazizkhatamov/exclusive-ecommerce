@@ -14,7 +14,7 @@ import { useMutation } from "react-query";
 import { deleteDeleteCategory } from "@/api/api-categories.ts";
 import { queryClient } from "@/api/api.ts";
 import { Category } from "@/features/categories/data/schema-categories.ts";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 
 interface DeleteSubcategoryDeleteProps {
   category: Category;
@@ -78,8 +78,16 @@ const DeleteSubcategoryDelete: React.FC<DeleteSubcategoryDeleteProps> = ({
           <Button variant="outline" onClick={() => setDeleteDialog(false)}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleConfirm}>
-            Delete
+          <Button
+            variant="destructive"
+            onClick={handleConfirm}
+            disabled={deleteCategoryMutation.isLoading}
+          >
+            {deleteCategoryMutation.isLoading ? (
+              <Loader className={"w-4 h-4 animate-spin"} />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

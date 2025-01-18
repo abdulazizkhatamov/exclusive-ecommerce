@@ -11,6 +11,8 @@ import ProductImageGallery from "@/features/product/components/ProductImageGalle
 import ProductInfo from "@/features/product/components/ProductInfo.tsx";
 import QuantitySelector from "@/features/product/components/QuantitySelector.tsx";
 import ProductAttributes from "@/features/product/components/ProductAttributes.tsx";
+import { Loader } from "lucide-react";
+import { Navigate } from "react-router-dom";
 
 interface ProductProps {
   _id: string;
@@ -46,8 +48,13 @@ const Product: React.FC<ProductProps> = ({ _id, addToCart }) => {
     }
   }, [product, dispatch]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error || !product?.data) return <div>Error loading product</div>;
+  if (isLoading)
+    return (
+      <div className={"w-screen h-screen items-center flex justify-center"}>
+        <Loader className="mr-2 h-4 w-4 animate-spin" />
+      </div>
+    );
+  if (error || !product?.data) return <Navigate to={"/"} replace={true} />;
 
   const { data } = product;
   const {

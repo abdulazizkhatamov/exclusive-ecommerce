@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
 import { FormikProps } from "formik";
-import { Edit } from "lucide-react";
+import { Edit, Loader } from "lucide-react";
 
 interface CategoryFormValues {
   _id: string;
@@ -27,12 +27,14 @@ interface CategoryFormValues {
 interface UpdateCategoryProps {
   open: boolean;
   onOpenChange: () => void;
+  isUpdating: boolean;
   formik: FormikProps<CategoryFormValues>;
 }
 
 export const UpdateCategorySheet: React.FC<UpdateCategoryProps> = ({
   open,
   onOpenChange,
+  isUpdating,
   formik,
 }) => (
   <Sheet open={open} onOpenChange={onOpenChange}>
@@ -86,7 +88,13 @@ export const UpdateCategorySheet: React.FC<UpdateCategoryProps> = ({
             }
           />
         </div>
-        <Button type="submit">Update</Button>
+        <Button type="submit" disabled={isUpdating}>
+          {isUpdating ? (
+            <Loader className={"h-4 w-4 animate-spin"} />
+          ) : (
+            "Update"
+          )}
+        </Button>
       </form>
     </SheetContent>
   </Sheet>

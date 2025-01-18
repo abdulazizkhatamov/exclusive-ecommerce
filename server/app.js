@@ -3,9 +3,9 @@
  */
 require("dotenv").config();
 const debug = require("debug")("server:server");
-const http = require("http");
+const http = require("node:http");
 const express = require("express");
-const path = require("path");
+const path = require("node:path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
@@ -13,6 +13,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const apiRouter = require("./routes/api");
+const chatRouter = require("./routes/chat-api");
 
 const authRouter = require("./routes/user-auth");
 const userRouter = require("./routes/user");
@@ -41,6 +42,7 @@ app.use(
 );
 
 app.use("/api", apiRouter);
+app.use("/api", chatRouter);
 app.use("/api/user/auth", authRouter);
 app.use("/api/user", userRouter);
 
@@ -82,6 +84,10 @@ async function startServer() {
   await connectToDatabase();
 
   server.listen(port);
+  const io = require("./utils/socket").init(server);
+  io.on("connection", (socket) => {
+    console.log(`New socket connection: ${socket.id}`);
+  });
   server.on("error", onError);
   server.on("listening", onListening);
 }

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const postmark = require("postmark");
+const io = require("../utils/socket");
 
 const Admin = require("../models/admin-schema");
 const Category = require("../models/category-schema");
@@ -7,7 +8,7 @@ const Product = require("../models/product-schema");
 const Variant = require("../models/variant-schema");
 const Order = require("../models/order-schema");
 const Email = require("../models/email-schema");
-const dbemail = require("debug");
+const Chat = require("../models/chat-schema");
 
 exports.getAdmin = async (req, res) => {
   return res.json(req.admin);
@@ -827,7 +828,7 @@ exports.postDeleteMailAccount = async (req, res) => {
     );
 
     if (accountIndex === -1) {
-      return res.status(404).json({ message: "Mail account not found" });
+      return res.status(404).json({ message: "Chat account not found" });
     }
 
     // Remove the mail account from the array
@@ -873,7 +874,7 @@ exports.putUpdateMsgStatus = async (req, res) => {
     const dbEmail = await Email.findById(emailId);
 
     if (!dbEmail) {
-      return res.status(400).json({ message: "Mail not found" });
+      return res.status(400).json({ message: "Chat not found" });
     }
 
     dbEmail.messages[dbEmail.messages.length - 1].isRead = status;
@@ -1041,5 +1042,160 @@ exports.postSendMessage = async (req, res) => {
   } catch (e) {
     console.error("Error posting send message", e);
     return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.getChatAccounts = async (req, res) => {
+  const admin = req.admin;
+
+  try {
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    return res.status(200).json(dbAdmin.chat_accounts);
+  } catch (error) {
+    console.error("Error getting chat accounts", error);
+    return res.status(400).json({ message: "Server error", error });
+  }
+};
+
+exports.postCreateChatAccount = async (req, res) => {
+  try {
+    const admin = req.admin;
+    const { name } = req.body;
+    const avatar = req.files[0].path;
+
+    if (!name || !avatar) {
+      return res.status(400).json({ message: "Invalid name or avatar" });
+    }
+
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    const newAccount = {
+      name,
+      avatar,
+    };
+
+    dbAdmin.chat_accounts.push(newAccount);
+    await dbAdmin.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "Successfully created account" });
+  } catch (e) {
+    console.error("Error posting chat account", e);
+    return res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.deleteDeleteChatAccount = async (req, res) => {
+  const admin = req.admin;
+
+  try {
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    const { _id } = req.body;
+
+    const accountIndex = dbAdmin.chat_accounts.findIndex(
+      (account) => account._id.toString() === _id,
+    );
+
+    if (accountIndex === -1) {
+      return res.status(404).json({ message: "Chat account not found" });
+    }
+
+    // Remove the mail account from the array
+    dbAdmin.chat_accounts.splice(accountIndex, 1);
+    await dbAdmin.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Successfully deleted account" });
+  } catch (e) {
+    console.error("Error deleting chat account", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.getChats = async (req, res) => {
+  try {
+    const dbChats = await Chat.find({ isDeleted: false });
+
+    return res.status(200).json(dbChats);
+  } catch (e) {
+    console.error("Error getting chats", e);
+    return res.status(500).json({ message: "Server error", error: e.message });
+  }
+};
+
+exports.postChatMessage = async (req, res) => {
+  const { _id, message, support } = req.body;
+  const admin = req.admin;
+
+  try {
+    const dbChat = await Chat.findById(_id);
+    const dbAdmin = await Admin.findById(admin._id);
+
+    if (!dbChat) {
+      return res.status(404).json({ message: "Chat not found" });
+    }
+
+    const supportAccount = dbAdmin.chat_accounts.find(
+      (account) => account._id.toString() === support,
+    );
+    if (!dbChat.isAccepted) {
+      dbChat.isAccepted = true;
+
+      const support = {
+        name: supportAccount.name,
+        avatar: supportAccount.avatar,
+      };
+
+      dbChat.support = support;
+    }
+
+    const newMessage = {
+      sender: "admin",
+      message,
+      sentAt: new Date(),
+    };
+
+    dbChat.messages.push(newMessage);
+
+    await dbChat.save();
+    io.getIO().emit("new_chat_message", {
+      by: {
+        name: dbChat.participant.name,
+        role: "admin",
+      },
+      chatId: dbChat._id,
+      message: newMessage,
+    });
+
+    return res.status(200).json({ success: true, message: newMessage });
+  } catch (e) {
+    console.error("Error posting chat message", e);
+  }
+};
+
+exports.deleteChatMessage = async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    const dbChat = await Chat.findByIdAndDelete(_id);
+
+    return res.status(200).json(dbChat);
+  } catch (e) {
+    console.error("Error deleting chat message", e);
   }
 };

@@ -41,7 +41,7 @@ const CreateMailAccountForm: React.FC<CreateMailAccountFormProps> = ({
           });
           setCreateAccountSheet(false);
           toast({
-            title: "Mail account created.",
+            title: "Chat account created.",
             description: new Date().toUTCString(),
           });
           resetForm();

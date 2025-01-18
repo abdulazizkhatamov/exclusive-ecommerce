@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast.ts";
 import { useMutation } from "react-query";
@@ -79,8 +79,16 @@ const DeleteVariantDialog: React.FC<DeleteVariantDialogProps> = ({
           >
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleConfirm}>
-            Delete
+          <Button
+            variant="destructive"
+            onClick={handleConfirm}
+            disabled={deleteVariantMutation.isLoading}
+          >
+            {deleteVariantMutation.isLoading ? (
+              <Loader className={"w-4 h-4 animate-spin"} />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

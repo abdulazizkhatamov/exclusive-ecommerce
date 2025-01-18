@@ -25,6 +25,12 @@ const AdminSchema = new Schema(
         key: { type: String, required: true, unique: true },
       },
     ],
+    chat_accounts: [
+      {
+        name: { type: String, required: true },
+        avatar: { type: String, required: true },
+      },
+    ],
   },
   { timestamps: true },
 );

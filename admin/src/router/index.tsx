@@ -10,6 +10,7 @@ import MailsLayout from "@/layouts/MailsLayout.tsx";
 import SettingsLayout from "@/layouts/SettingsLayout.tsx";
 // Lazy-loaded page imports
 import * as Pages from "@/utils/lazy-imports.ts";
+import ChatsLayout from "@/layouts/ChatsLayout.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,15 @@ export const router = createBrowserRouter([
           { index: true, element: <Pages.MailsPage /> },
           { path: "trash", element: <Pages.MailsPage /> },
           { path: "accounts", element: <Pages.MailAccountsPage /> },
+        ],
+      },
+      {
+        path: "chats",
+        element: <ChatsLayout />,
+        children: [
+          { index: true, element: <Pages.ChatsPage /> },
+          { path: "trash", element: <Pages.ChatsPage /> },
+          { path: "accounts", element: <Pages.ChatAccountsPage /> },
         ],
       },
       {

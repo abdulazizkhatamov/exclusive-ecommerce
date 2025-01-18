@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IAddress } from "@/types/user.ts";
 import { authHttpClient } from "@/api/api.ts";
+import { IMessage } from "@/features/chat/chat-slice.ts";
 
 export const getCategories = async () => {
   try {
@@ -122,5 +123,47 @@ export const deleteDeleteAddress = async (id: string) => {
       throw new Error("An error occurred while deleting the account");
     }
     throw new Error("An unexpected error occurred");
+  }
+};
+
+export const getChat = async (id: string) => {
+  try {
+    const response = await axios.get(`/api/chat/${id}`);
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.data?.message) {
+        throw new Error(e.response.data.message);
+      }
+      throw new Error("An error occurred while creating the chat");
+    }
+  }
+};
+
+export const postCreateChat = async (data: { name: string }) => {
+  try {
+    const response = await axios.post("/api/chat/create", data);
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.data?.message) {
+        throw new Error(e.response.data.message);
+      }
+      throw new Error("An error occurred while creating the chat");
+    }
+  }
+};
+
+export const postSendMessage = async (data: IMessage) => {
+  try {
+    const response = await axios.post("/api/chat/message", data);
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.data?.message) {
+        throw new Error(e.response.data.message);
+      }
+      throw new Error("An error occurred while creating the chat");
+    }
   }
 };

@@ -101,6 +101,7 @@ export function DataTableRowActions<TData>({
       <UpdateCategorySheet
         open={updateSheet}
         onOpenChange={() => setUpdateSheet(!updateSheet)}
+        isUpdating={updateCategoryMutation.isLoading}
         formik={updateCategoryFormik}
       />
       <DeleteCategoryDialog
@@ -127,6 +128,7 @@ export function DataTableRowActions<TData>({
             },
           })
         }
+        isDeleting={deleteCategoryMutation.isLoading}
         categoryName={category?.name}
       />
     </div>

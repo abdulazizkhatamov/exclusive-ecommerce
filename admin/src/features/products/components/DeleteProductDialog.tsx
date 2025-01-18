@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 import { Product } from "@/features/products/data/schema-products.ts";
 import { useToast } from "@/hooks/use-toast.ts";
 import { useMutation } from "react-query";
@@ -78,8 +78,16 @@ const DeleteProductDialog: React.FC<DeleteProductDialogProps> = ({
           >
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleConfirm}>
-            Delete
+          <Button
+            variant="destructive"
+            onClick={handleConfirm}
+            disabled={deleteProductMutation.isLoading}
+          >
+            {deleteProductMutation.isLoading ? (
+              <Loader className={"w-4 h-4 animate-spin"} />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

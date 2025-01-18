@@ -51,6 +51,12 @@ export const MailAccountsPage = lazy(
   () => import("@/pages/Mails/MailAccountsPage.tsx"),
 );
 
+export const ChatsPage = lazy(() => import("@/pages/Chats/ChatsPage.tsx"));
+
+export const ChatAccountsPage = lazy(
+  () => import("@/pages/Chats/ChatAccountsPage.tsx"),
+);
+
 export const GeneralSettingsPage = lazy(
   () => import("@/pages/Settings/GeneralSettingsPage.tsx"),
 );

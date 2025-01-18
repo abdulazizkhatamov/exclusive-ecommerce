@@ -9,12 +9,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 
 interface DeleteCategoryProps {
   open: boolean;
   onOpenChange: () => void;
   onDelete: () => void;
+  isDeleting: boolean;
   categoryName: string;
 }
 
@@ -22,6 +23,7 @@ export const DeleteCategoryDialog: React.FC<DeleteCategoryProps> = ({
   open,
   onOpenChange,
   onDelete,
+  isDeleting,
   categoryName,
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
@@ -39,8 +41,12 @@ export const DeleteCategoryDialog: React.FC<DeleteCategoryProps> = ({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button variant="destructive" onClick={onDelete}>
-          Delete
+        <Button variant="destructive" onClick={onDelete} disabled={isDeleting}>
+          {isDeleting ? (
+            <Loader className={"h-4 w-4 animate-spin"} />
+          ) : (
+            "Delete"
+          )}
         </Button>
       </DialogFooter>
     </DialogContent>

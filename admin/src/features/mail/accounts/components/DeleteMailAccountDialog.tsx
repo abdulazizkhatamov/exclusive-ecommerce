@@ -39,7 +39,7 @@ const DeleteMailAccountDialog: React.FC<DeleteMailAccountDialogProps> = ({
       });
       setDeleteMailAccountDialog(false);
       toast({
-        title: "Mail account deleted.",
+        title: "Chat account deleted.",
         description: new Date().toUTCString(),
       });
     },
@@ -73,9 +73,9 @@ const DeleteMailAccountDialog: React.FC<DeleteMailAccountDialogProps> = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Delete Subcategory</DialogTitle>
+          <DialogTitle>Delete Account</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete the subcategory "{account.name}
+            Are you sure you want to delete the account "{account.name}
             "? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>

@@ -12,12 +12,14 @@ import { Button } from "@/components/ui/button.tsx";
 import { DrawerClose, DrawerFooter } from "@/components/ui/drawer.tsx";
 import { getCurrentStep, statuses } from "@/features/orders/utils.ts";
 import { IOrder } from "@/types/order.ts";
+import { Loader } from "lucide-react";
 
 interface UpdateStatusProps {
   order: IOrder;
   isDialogOpen: boolean;
   setDialogOpen: (isOpen: boolean) => void;
   updateStatus: () => void;
+  isUpdating: boolean;
 }
 
 const UpdateStatus: React.FC<UpdateStatusProps> = ({
@@ -25,6 +27,7 @@ const UpdateStatus: React.FC<UpdateStatusProps> = ({
   isDialogOpen,
   setDialogOpen,
   updateStatus,
+  isUpdating,
 }) => {
   const currentStep = getCurrentStep(order.orderStatus);
 
@@ -52,7 +55,13 @@ const UpdateStatus: React.FC<UpdateStatusProps> = ({
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button onClick={updateStatus}>Update</Button>
+                <Button onClick={updateStatus} disabled={isUpdating}>
+                  {isUpdating ? (
+                    <Loader className={"w-4 h-4 animate-spin"} />
+                  ) : (
+                    "Update"
+                  )}
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

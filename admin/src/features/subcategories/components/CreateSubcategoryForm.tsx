@@ -19,6 +19,7 @@ import { getCategories, postCreateCategory } from "@/api/api-categories.ts";
 import { useFormik } from "formik";
 import { queryClient } from "@/api/api.ts";
 import * as Yup from "yup";
+import { Loader } from "lucide-react";
 
 interface CreateSubcategoryFormProps {
   setCreateSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -156,8 +157,16 @@ const CreateSubcategoryForm: React.FC<CreateSubcategoryFormProps> = ({
           }
         />
       </div>
-      <Button type="submit" className="btn btn-primary">
-        Create
+      <Button
+        type="submit"
+        className="btn btn-primary"
+        disabled={createSubcategoryMutation.isLoading}
+      >
+        {createSubcategoryMutation.isLoading ? (
+          <Loader className={"w-4 h-4 animate-spin"} />
+        ) : (
+          "Create"
+        )}
       </Button>
     </form>
   );

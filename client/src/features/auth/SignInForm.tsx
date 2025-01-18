@@ -117,7 +117,11 @@ const SignInForm: React.FC = () => {
           </div>
         )}
       </div>
-      <Button type="submit" className="w-full bg-primary_red hover:bg-red-600">
+      <Button
+        type="submit"
+        className="w-full bg-primary_red hover:bg-red-600"
+        disabled={mutation.isLoading}
+      >
         {mutation.isLoading ? (
           <>
             <Loader className="mr-2 h-4 w-4 animate-spin" />{" "}

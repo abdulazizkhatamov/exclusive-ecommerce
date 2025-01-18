@@ -22,8 +22,6 @@ const ExploreProducts: React.FC = () => {
 
   const limitedProducts = products.slice(0, 10);
 
-  console.log(limitedProducts);
-
   return (
     <div className="my-20 px-4">
       <div className="my-10">

@@ -19,6 +19,7 @@ import { getCategories, putUpdateCategory } from "@/api/api-categories.ts";
 import { useFormik } from "formik";
 import { queryClient } from "@/api/api.ts";
 import * as Yup from "yup";
+import { Loader } from "lucide-react";
 
 interface UpdateSubcategoryFormProps {
   parent: string | null | undefined;
@@ -194,8 +195,16 @@ const UpdateSubcategoryForm: React.FC<UpdateSubcategoryFormProps> = ({
           }
         />
       </div>
-      <Button type="submit" className="btn btn-primary">
-        Update
+      <Button
+        type="submit"
+        className="btn btn-primary"
+        disabled={updateSubcategoryMutation.isLoading}
+      >
+        {updateSubcategoryMutation.isLoading ? (
+          <Loader className={"w-4 h-4 animate-spin"} />
+        ) : (
+          "Update"
+        )}
       </Button>
     </form>
   );

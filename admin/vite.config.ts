@@ -9,6 +9,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ["socket.io-client"],
+  },
   server: {
     proxy: {
       "/api": {

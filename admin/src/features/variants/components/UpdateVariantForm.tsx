@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 import { useToast } from "@/hooks/use-toast.ts";
 import { useMutation } from "react-query";
 import { putUpdateVariant } from "@/api/api-variants.ts";
@@ -305,8 +305,16 @@ const UpdateVariantForm: React.FC<UpdateVariantFormProps> = ({
           ))}
         </div>
       </div>
-      <Button type="submit" className="btn btn-primary">
-        Update
+      <Button
+        type="submit"
+        className="btn btn-primary"
+        disabled={updateVariantMutation.isLoading}
+      >
+        {updateVariantMutation.isLoading ? (
+          <Loader className={"w-4 h-4 animate-spin"} />
+        ) : (
+          "Update"
+        )}
       </Button>
     </form>
   );

@@ -162,4 +162,38 @@ router.delete(
 
 router.post("/mail/message", authenticate, controller.postSendMessage);
 
+router.get("/chat/accounts", authenticate, controller.getChatAccounts);
+
+router.post(
+  "/chat/accounts",
+  authenticate,
+  (req, res, next) => {
+    upload.array("image", 10)(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors (e.g., file size limit exceeded)
+        return res.status(400).json({ message: err.message });
+      } else if (err) {
+        // Handle general errors (e.g., other unexpected errors)
+        return res
+          .status(500)
+          .json({ message: "Internal Server Error", error: err.message });
+      }
+      next(); // Proceed to the next middleware if no error
+    });
+  },
+  controller.postCreateChatAccount,
+);
+
+router.delete(
+  "/chat/accounts/",
+  authenticate,
+  controller.deleteDeleteChatAccount,
+);
+
+router.get("/chats", authenticate, controller.getChats);
+
+router.post("/chat/messages", authenticate, controller.postChatMessage);
+
+router.delete("/chat/messages", authenticate, controller.deleteChatMessage);
+
 module.exports = router;

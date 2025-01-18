@@ -1,10 +1,12 @@
 import React from "react";
 import { setQuantity } from "@/features/product/product-slice.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleCartSheet } from "@/features/cart/cart-slice.ts";
 import { ICartItem } from "@/types/user.ts";
 import { IVariant } from "@/types/variant.ts";
 import { IProduct } from "@/types/product.ts";
+import { RootState } from "@/app/store.ts";
+import { useNavigate } from "react-router-dom";
 
 interface QuantitySelectorProps {
   product: IProduct;
@@ -21,7 +23,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   isOutOfStock,
   selectedVariant,
 }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const handleQuantityChange = (type: "increment" | "decrement") => {
     dispatch(
@@ -32,6 +36,10 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   };
 
   const handleAddToCart = () => {
+    if (!user) {
+      return navigate("/signin");
+    }
+
     const productToAdd = {
       _id: "",
       product: product,
